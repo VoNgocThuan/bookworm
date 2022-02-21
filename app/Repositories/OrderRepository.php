@@ -15,7 +15,7 @@ class OrderRepository implements CrudInterface
     }
     public function getAll()
     {
-        $orders = Order::get();
+        $orders = Order::all();
         return $orders;
     }
     public function create(Request $request)

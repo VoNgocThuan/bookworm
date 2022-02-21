@@ -2,18 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ReviewRepository;
 use Illuminate\Http\Request;
 
-class ReviewController extends Controller
+class CartController extends Controller
 {
-    public $reviewRepository;
-
-    public function __construct(ReviewRepository $reviewRepository)
-    {
-        $this->reviewRepository = $reviewRepository;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,12 +13,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = $this->reviewRepository->getAll();
-        return response()->json([
-            'success' => true,
-            'message' => 'Review List',
-            'data'    => $reviews
-        ]);
+        //
     }
 
     /**
@@ -47,12 +34,7 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $reviews = $this->reviewRepository->create($request);
-        return response()->json([
-            'success' => true,
-            'message' => 'Review Stored',
-            'data'    => $reviews
-        ]);
+        //
     }
 
     /**
@@ -64,29 +46,6 @@ class ReviewController extends Controller
     public function show($id)
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showReviewOfBook($id)
-    {
-        $reviews = $this->reviewRepository->findReviewOfBook($id);
-        if (is_null($reviews)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Review Of Book Details',
-                'data'    => null
-            ]);
-        }
-        return response()->json([
-            'success' => true,
-            'message' => 'Review Of Book Details',
-            'data'    => $reviews
-        ]);
     }
 
     /**

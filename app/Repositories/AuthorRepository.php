@@ -10,13 +10,12 @@ class AuthorRepository implements CrudInterface
 {
     public function getAll()
     {
-        $authors = Author::orderBy('id', 'asc')->get();
+        $authors = Author::all();
         return $authors;
     }
     public function findById($id)
     {
-        $authors = Author::with('book')
-            ->find($id);
+        $authors = Author::find($id);
         return $authors;
     }
     public function create(Request $request)

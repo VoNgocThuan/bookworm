@@ -3,20 +3,20 @@
 namespace App\Repositories;
 
 use App\Interfaces\CrudInterface;
-use App\Models\Category;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 
-class CategoryRepository implements CrudInterface
+class DiscountRepository implements CrudInterface
 {
     public function getAll()
     {
-        $categories = Category::all();
-        return $categories;
+        $discounts = Discount::all();
+        return $discounts;
     }
     public function findById($id)
     {
-        $categories = Category::find($id);
-        return $categories;
+        $discounts = Discount::find($id);
+        return $discounts;
     }
     public function create(Request $request)
     {

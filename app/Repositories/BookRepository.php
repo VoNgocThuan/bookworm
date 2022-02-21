@@ -10,13 +10,12 @@ class BookRepository implements CrudInterface
 {
     public function getAll()
     {
-        $books = Book::orderBy('id', 'asc')->get();
+        $books = Book::with('author')->get();
         return $books;
     }
     public function findById($id)
     {
-        $books = Book::with('category')
-            ->find($id);
+        $books = Book::with('author', 'category')->find($id);
         return $books;
     }
     public function create(Request $request)
