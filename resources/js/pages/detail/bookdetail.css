@@ -1,0 +1,25 @@
+.bm-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bg-quantity {
+    background-color: #00AFF0;
+}
+
+.height-quantity {
+    height: 40px;
+}
+
+.border-book-detail {
+    border: 1px solid #cccccc;
+}
+
+.star-mr {
+    margin-right: 20px;
+}
+
+.fl-right {
+    float: right;
+}

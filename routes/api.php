@@ -21,10 +21,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('/login', [AuthController::class, 'login']);
 
 // Route::middleware(['auth:sanctum'])->group(function () {
@@ -36,6 +32,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/books/bookOnSale', [BookController::class, 'showTop10BooksOnSale']);
+
+Route::get('/books/bookRecommended', [BookController::class, 'showTop8BooksRecommended']);
+
+Route::get('/books/bookPopular', [BookController::class, 'showTop8BooksPopular']);
 
 Route::resource('/books', BookController::class);
 

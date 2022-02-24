@@ -85,6 +85,40 @@ class BookController extends Controller
         ]);
     }
 
+    public function showTop8BooksRecommended()
+    {
+        $booksRecommended = $this->bookRepository->findTop8BookRecommended();
+        if (is_null($booksRecommended)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Book Details',
+                'data'    => null
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Book Details',
+            'data'    => $booksRecommended
+        ]);
+    }
+
+    public function showTop8BooksPopular()
+    {
+        $booksPopular = $this->bookRepository->findTop8BookPopular();
+        if (is_null($booksPopular)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Book Details',
+                'data'    => null
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Book Details',
+            'data'    => $booksPopular
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

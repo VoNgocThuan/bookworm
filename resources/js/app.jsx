@@ -1,8 +1,41 @@
-import React from 'react';
+import Header from './component/Header';
 import ReactDOM from 'react-dom';
-import Welcome from './welcome';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
+import Footer from './component/Footer';
+import Home from './pages/home/Home';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import BookDetail from './pages/detail/BookDetail';
+import Shop from './pages/shop/Shop';
+import LoginModal from './pages/login/LoginModal';
 
-ReactDOM.render(
-  <Welcome/>,
-  document.getElementById('root')
-);
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Header></Header>
+        <Routes>
+          <Route path="/">
+            <Route index element={<Home />} />
+            <Route path="/books/:id" element={<BookDetail />} />
+            <Route path="/shop" element={<Shop />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>,
+      <LoginModal></LoginModal>
+      <Footer></Footer>
+    </div>
+  );
+}
+
+export default App;
+
+if (document.getElementById('root')) {
+  ReactDOM.render(
+    <App />
+    , document.getElementById('root'));
+}

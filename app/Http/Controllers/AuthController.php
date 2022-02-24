@@ -27,14 +27,25 @@ class AuthController extends Controller
 
         // return response($response, 201);
 
-        if (!Auth::attempt(request()->only('email', 'password'))) {
+        // if (!Auth::attempt(request()->only('email', 'password'))) {
+        //     return response()->json([
+        //         'message' => 'Login failed'
+        //     ]);
+        // }
+
+        // return response()->json([
+        //     'message' => 'Login successful'
+        // ]);
+
+
+        if (Auth::guard()->attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
+
             return response()->json([
-                'message' => 'Login failed'
+                'message' => 'Login successful'
             ]);
         }
 
-        return response()->json([
-            'message' => 'Login successful'
-        ]);
+        return response()->json(['error' => 'Invalid credentials']);
     }
 }
