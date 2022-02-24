@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\DiscountRepository;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {
+
+    public $discountRepository;
+
+    public function __construct(DiscountRepository $discountRepository)
+    {
+        $this->discountRepository = $discountRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
@@ -24,11 +25,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [AuthController::class , 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('/orders', OrderController::class);
+// Route::middleware(['auth:sanctum'])->group(function () {
+//     Route::resource('/orders', OrderController::class);
+// });
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });
+
+Route::get('/books/bookOnSale', [BookController::class, 'showTop10BooksOnSale']);
 
 Route::resource('/books', BookController::class);
 
@@ -36,6 +43,6 @@ Route::resource('/categories', CategoryController::class);
 
 Route::resource('/authors', AuthorController::class);
 
-Route::post('/reviews', [ReviewController::class , 'store']);
+Route::post('/reviews', [ReviewController::class, 'store']);
 
 Route::get('/reviews/{id}', [ReviewController::class, 'showReviewOfBook']);

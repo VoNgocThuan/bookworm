@@ -68,6 +68,23 @@ class BookController extends Controller
         ]);
     }
 
+    public function showTop10BooksOnSale()
+    {
+        $booksOnSale = $this->bookRepository->findTop10BookOnSale();
+        if (is_null($booksOnSale)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Book Details',
+                'data'    => null
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Book Details',
+            'data'    => $booksOnSale
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
