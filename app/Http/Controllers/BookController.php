@@ -24,6 +24,12 @@ class BookController extends Controller
         ]);
     }
 
+    public function showBookByFilterSortPagi(Request $request) {
+        $books = $this->bookRepository->getBookByFilterSortPagi($request);
+        
+        return $books;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

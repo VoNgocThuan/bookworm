@@ -9,3 +9,11 @@
 .p-bottom {
     padding-bottom: 5px;
 }
+
+.main-color {
+    background-color: #00AFF0;
+}
+
+.title-center {
+    text-align: center;
+}

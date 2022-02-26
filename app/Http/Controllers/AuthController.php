@@ -11,41 +11,40 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // $user = User::where('email', $request->email)->first();
-        // if (!$user || !Hash::check($request->password, $user->password)) {
-        //     return response([
-        //         'message' => ['These credentials do not match our records.']
-        //     ], 404);
-        // }
+        try {
+            $request->validate([
+                'email' => 'email|required',
+                'password' => 'required'
+            ]);
 
-        // $token = $user->createToken('my-app-token')->plainTextToken;
+            $credentials = request(['email', 'password']);
 
-        // $response = [
-        //     'user' => $user,
-        //     'token' => $token
-        // ];
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'status_code' => 500,
+                    'message' => 'Unauthorized'
+                ]);
+            }
 
-        // return response($response, 201);
+            $user = User::where('email', $request->email)->first();
 
-        // if (!Auth::attempt(request()->only('email', 'password'))) {
-        //     return response()->json([
-        //         'message' => 'Login failed'
-        //     ]);
-        // }
+            if (!Hash::check($request->password, $user->password, [])) {
+                throw new \Exception('Error in Login');
+            }
 
-        // return response()->json([
-        //     'message' => 'Login successful'
-        // ]);
-
-
-        if (Auth::guard()->attempt($request->only('email', 'password'))) {
-            $request->session()->regenerate();
+            $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
-                'message' => 'Login successful'
+                'status_code' => 200,
+                'access_token' => $tokenResult,
+                'token_type' => 'Bearer',
+            ]);
+        } catch (\Exception $error) {
+            return response()->json([
+                'status_code' => 500,
+                'message' => 'Error in Login',
+                'error' => $error,
             ]);
         }
-
-        return response()->json(['error' => 'Invalid credentials']);
     }
 }
