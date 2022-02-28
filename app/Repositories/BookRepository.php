@@ -17,25 +17,163 @@ class BookRepository implements CrudInterface
 
     public function getBookByFilterSortPagi(Request $request)
     {
-        $filter = $request->query("filter");
-        $sort = $request->query("sort");
-        $paginate = $request->query("paginate");
+        $filterArray = $request->query("filter");
+        $sortArray = $request->query("sort");
+        $paginateValue = $request->query("paginate");
 
-        // switch($sort) {
-        //     case('onsale'): 
-        //         if($request->has("filter")) 
-        //         {
-        //             $books = $this->findBookOnSale()->
-        //         }
-        //         break;
-        //     case('popularity'):
+        if (is_array($filterArray) || is_object($filterArray)) {
+            $filter1Key = array();
+            $filter1Value = array();
+            $filter2Key = array();
+            $filter2Value = array();
+            foreach ($filterArray as $key => $value) {
+                if ($key != 'avg_star') {
+                    $filter1Key[] = $key;
+                    $filter1Value[] = $value;
+                } else {
+                    $filter2Key[] = $key;
+                    $filter2Value[] = $value;
+                }
+            }
+        }
 
-        //         break;
+        foreach ($sortArray as $key => $value) {
+            $sortKey = $key;
+            $sortValue = $value;
+        }
 
-        //     default:
-        //         $msg = 'Something went wrong.';
-        // }
-        print_r($filter);
+        switch ($sortValue) {
+            case ('onSale'):
+                if ($request->has("filter")) {
+                    if ($filter2Value != null)
+                        $books = Book::OnSaleBooks()
+                            ->join('review', 'book.id', '=', 'review.book_id')
+                            ->selectRaw('avg(review.rating_start) as avg_star')
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->havingRaw('avg(review.rating_start) >= ?', array($filter2Value))
+                            ->orderByDesc('reduced_price')
+                            ->paginate($paginateValue);
+                    else {
+                        $books = Book::OnSaleBooks()
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->orderByDesc('reduced_price')
+                            ->paginate($paginateValue);
+                    }
+                    return $books;
+                } else {
+                    $books = Book::OnSaleBooks()
+                        ->orderByDesc('reduced_price')
+                        ->paginate($paginateValue);
+                    return $books;
+                }
+                break;
+            case ('popularity'):
+                if ($request->has("filter")) {
+                    if ($filter2Value != null) {
+                        $books = Book::PopularBooks()
+                            ->selectRaw('avg(review.rating_start) as avg_star')
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->havingRaw('avg(review.rating_start) >= ?', array($filter2Value))
+                            ->orderByDesc('total_review')
+                            ->paginate($paginateValue);
+                    } else {
+                        $books = Book::PopularBooks()
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->orderByDesc('total_review')
+                            ->paginate($paginateValue);
+                    }
+                    return $books;
+                } else {
+                    $books = Book::PopularBooks()
+                        ->orderByDesc('total_review')
+                        ->paginate($paginateValue);
+                    return $books;
+                }
+                break;
+            case ('priceAsc'):
+                if ($request->has("filter")) {
+                    if ($filter2Value != null) {
+                        $books = Book::FeaturedBooks()
+                            ->selectRaw('avg(review.rating_start) as avg_star')
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->havingRaw('avg(review.rating_start) >= ?', array($filter2Value))
+                            ->orderBy('final_price')
+                            ->paginate($paginateValue);
+                    } else {
+                        $books = Book::FeaturedBooks()
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->orderBy('final_price')
+                            ->paginate($paginateValue);
+                    }
+                    return $books;
+                } else {
+                    $books = Book::FeaturedBooks()
+                        ->orderBy('final_price')
+                        ->paginate($paginateValue);
+
+                    return $books;
+                }
+                break;
+            case ('priceDesc'):
+                if ($request->has("filter")) {
+                    if ($filter2Value != null) {
+                        $books = Book::FeaturedBooks()
+                            ->selectRaw('avg(review.rating_start) as avg_star')
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->havingRaw('avg(review.rating_start) >= ?', array($filter2Value))
+                            ->orderByDesc('final_price')
+                            ->paginate($paginateValue);
+                    } else {
+                        $books = Book::FeaturedBooks()
+                            ->where(function ($q) use ($filter1Key, $filter1Value) {
+                                foreach ($filter1Key as $index => $value) {
+                                    $q->where($value, '=', $filter1Value[$index]);
+                                }
+                            })
+                            ->orderByDesc('final_price')
+                            ->paginate($paginateValue);
+                    }
+                    return $books;
+                } else {
+                    $books = Book::FeaturedBooks()
+                        ->orderByDesc('final_price')
+                        ->paginate($paginateValue);
+
+                    return $books;
+                }
+                break;
+
+            default:
+                $msg = 'Something went wrong.';
+        }
     }
 
     // public function findById($id)
@@ -57,26 +195,17 @@ class BookRepository implements CrudInterface
         return $bookDetail;
     }
 
-    public function findBookOnSale()
+    public function findOnSaleBooks()
     {
-        $booksOnSale = DB::table('book')
-            ->join('discount', 'book.id', '=', 'discount.book_id')
-            ->join('author', 'book.author_id', '=', 'author.id')
-            ->select('discount.book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'author.author_name')
-            ->selectraw('book.book_price - discount.discount_price AS reduced_price')
-            ->orderByDesc('reduced_price')
+        $booksOnSale = Book::OnSaleBooks()
             ->get();
 
         return $booksOnSale;
     }
 
-    public function findTop10BookOnSale()
+    public function findTop10OnSaleBooks()
     {
-        $booksOnSale = DB::table('book')
-            ->join('discount', 'book.id', '=', 'discount.book_id')
-            ->join('author', 'book.author_id', '=', 'author.id')
-            ->select('discount.book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'author.author_name')
-            ->selectraw('book.book_price - discount.discount_price AS reduced_price')
+        $booksOnSale = Book::OnSaleBooks()
             ->orderByDesc('reduced_price')
             ->take(10)
             ->get();
@@ -84,10 +213,9 @@ class BookRepository implements CrudInterface
         return $booksOnSale;
     }
 
-    public function findTop8BookRecommended()
+    public function findTop8RecommendedBooks()
     {
-        $booksRecommended = Book::FeaturedBook()
-            ->selectRaw('avg(review.rating_start) as avg_star')
+        $booksRecommended = Book::AvgRatingStarBooks()
             ->orderByDesc('avg_star')
             ->orderBy('final_price')
             ->take(8)
@@ -96,10 +224,9 @@ class BookRepository implements CrudInterface
         return $booksRecommended;
     }
 
-    public function findTop8BookPopular()
+    public function findTop8PopularBooks()
     {
-        $booksRecommended = Book::FeaturedBook()
-            ->selectRaw('count(review.book_id) as total_review')
+        $booksRecommended = Book::PopularBooks()
             ->orderByDesc('total_review')
             ->orderBy('final_price')
             ->take(8)

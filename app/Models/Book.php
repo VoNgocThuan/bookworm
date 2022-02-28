@@ -33,7 +33,20 @@ class Book extends Model
         return $this->hasMany(Discount::class);
     }
 
-    public function scopeFeaturedBook()
+    public function scopeOnSaleBooks()
+    {
+        $onSaleBooks = DB::table('book')
+            ->join('category', 'book.category_id', '=', 'category.id')
+            ->join('discount', 'book.id', '=', 'discount.book_id')
+            ->join('author', 'book.author_id', '=', 'author.id')
+            ->select('discount.book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'author.author_name')
+            ->selectraw('book.book_price - discount.discount_price AS reduced_price')
+            ->groupBy('author.author_name', 'discount.book_id', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
+
+        return $onSaleBooks;
+    }
+
+    public function scopeFeaturedBooks()
     {
         $featuredBooks = DB::table('book')
             ->join('review', 'book.id', '=', 'review.book_id')
@@ -44,5 +57,22 @@ class Book extends Model
             ->groupBy('review.book_id', 'author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
 
         return $featuredBooks;
+    }
+
+    public function scopePopularBooks()
+    {
+        $popularBooks = Book::FeaturedBooks()
+            ->join('category', 'book.category_id', '=', 'category.id')
+            ->selectRaw('count(review.book_id) as total_review');
+
+        return $popularBooks;
+    }
+
+    public function scopeAvgRatingStarBooks()
+    {
+        $avgRatingStarBooks = Book::FeaturedBooks()
+            ->selectRaw('avg(review.rating_start) as avg_star');
+
+        return $avgRatingStarBooks;
     }
 }

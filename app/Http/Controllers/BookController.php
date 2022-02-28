@@ -74,9 +74,9 @@ class BookController extends Controller
         ]);
     }
 
-    public function showTop10BooksOnSale()
+    public function showTop10OnSaleBooks()
     {
-        $booksOnSale = $this->bookRepository->findTop10BookOnSale();
+        $booksOnSale = $this->bookRepository->findTop10OnSaleBooks();
         if (is_null($booksOnSale)) {
             return response()->json([
                 'success' => false,
@@ -91,9 +91,9 @@ class BookController extends Controller
         ]);
     }
 
-    public function showTop8BooksRecommended()
+    public function showTop8RecommendedBooks()
     {
-        $booksRecommended = $this->bookRepository->findTop8BookRecommended();
+        $booksRecommended = $this->bookRepository->findTop8RecommendedBooks();
         if (is_null($booksRecommended)) {
             return response()->json([
                 'success' => false,
@@ -108,9 +108,9 @@ class BookController extends Controller
         ]);
     }
 
-    public function showTop8BooksPopular()
+    public function showTop8PopularBooks()
     {
-        $booksPopular = $this->bookRepository->findTop8BookPopular();
+        $booksPopular = $this->bookRepository->findTop8PopularBooks();
         if (is_null($booksPopular)) {
             return response()->json([
                 'success' => false,
