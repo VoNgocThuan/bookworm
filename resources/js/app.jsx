@@ -1,8 +1,8 @@
-import Header from './component/Header';
+import Header from './component/Header/Header';
+import Footer from './component/Footer/Footer';
 import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
-import Footer from './component/Footer';
 import Home from './pages/home/Home';
 import {
   BrowserRouter,

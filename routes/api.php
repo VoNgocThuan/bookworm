@@ -29,11 +29,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::get('/books/condition', [BookController::class, 'showBookByFilterSortPagi']);
 
-Route::get('/books/bookOnSale', [BookController::class, 'showTop10OnSaleBooks']);
+Route::get('/books/onsale', [BookController::class, 'showTop10OnSaleBooks']);
 
-Route::get('/books/bookRecommended', [BookController::class, 'showTop8RecommendedBooks']);
+Route::get('/books/recommended', [BookController::class, 'showTop8RecommendedBooks']);
 
-Route::get('/books/bookPopular', [BookController::class, 'showTop8PopularBooks']);
+Route::get('/books/popular', [BookController::class, 'showTop8PopularBooks']);
 
 Route::resource('/books', BookController::class);
 
