@@ -12,6 +12,10 @@ import {
 import BookDetail from './pages/detail/BookDetail';
 import Shop from './pages/shop/Shop';
 import LoginModal from './pages/login/LoginModal';
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducers from "./reducers/index";
+const store = createStore(reducers);
 
 function App() {
   return (
@@ -36,6 +40,8 @@ export default App;
 
 if (document.getElementById('root')) {
   ReactDOM.render(
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
     , document.getElementById('root'));
 }

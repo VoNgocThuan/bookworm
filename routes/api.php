@@ -3,10 +3,12 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +27,10 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/orders', OrderController::class);
+    Route::resource('/cart', CartController::class);
 });
-
+Route::resource('/users', UserController::class);
+Route::get('/users/full-name/{id}', [UserController::class, 'showUserFullName']);
 Route::get('/books/condition', [BookController::class, 'showBookByFilterSortPagi']);
 
 Route::get('/books/onsale', [BookController::class, 'showTop10OnSaleBooks']);

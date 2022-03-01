@@ -1,31 +1,42 @@
 import Axios from 'axios'
 import React, { useState } from 'react'
+import "./loginmodal.css"
+import { useDispatch } from 'react-redux';
+//Import action dùng để dispatch
+import { setAccessToken, setUserId } from '../../actions/index'
 
-export default function LoginModal() {
-    const [formInput, setFormInput] = useState({ email: '', password: '' })
-    
+function LoginModal() {
+    const dispatch = useDispatch();
+    const [state, setState] = useState({
+        email: '',
+        password: '',
+        access_token: ''
+    })
+
     const updateFormInput = e => {
         if (e.target.type === "email") {
-            setFormInput(prevState => ({ ...prevState, email: e.target.value }))
+            setState(prevState => ({ ...prevState, email: e.target.value }))
         }
         if (e.target.type === "password") {
-            setFormInput(prevState => ({ ...prevState, password: e.target.value }))
+            setState(prevState => ({ ...prevState, password: e.target.value }))
         }
     }
 
-    const signIn = e => {
+    const signIn = function () {
         Axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
-            Axios.post('http://localhost:8000/api/login', formInput).then(response => {
+            Axios.post('http://localhost:8000/api/login', state).then(response => {
                 if (response.data.error) {
                     console.log(response.data.error)
                 } else {
-                    console.log('Success')
+                    setState({
+                        access_token: response.data.access_token
+                    })
+                    dispatch(setAccessToken(response.data.access_token));
+                    dispatch(setUserId(response.data.user_id));
                 }
             })
         });
     }
-
-    console.log(formInput);
 
     return (
         <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -50,10 +61,14 @@ export default function LoginModal() {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" onClick={signIn}>Login</button>
+                        <button type="button" className="btn btn-login" onClick={signIn}>
+                            Login
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
+
+export default LoginModal;

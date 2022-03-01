@@ -18,6 +18,11 @@ class UserRepository implements CrudInterface
         $users = User::find($id);
         return $users;
     }
+    public function getFullNameUser($id)
+    {
+        $user = User::find($id)->full_name;
+        return $user;
+    }
     public function create(Request $request)
     {
        

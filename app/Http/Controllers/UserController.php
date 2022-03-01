@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
     public $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -59,7 +58,22 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = $this->userRepository->findById($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'User Data',
+            'data'    => $user
+        ]);
+    }
+
+    public function showUserFullName($id)
+    {
+        $user = $this->userRepository->getFullNameUser($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'User Full Name',
+            'data'    => $user
+        ]);
     }
 
     /**

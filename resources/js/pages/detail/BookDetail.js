@@ -12,55 +12,66 @@ export default function BookDetail() {
         getBook();
     }, [])
     const getBook = async () => {
-        const res = await Axios.get(`http://127.0.0.1:8000/api/books/${id}`);
+        const res = await Axios.get(`http://localhost:8000/api/books/${id}`);
         setState({
             book: res.data.data
         })
     }
     return (
         <div className='container'>
-            <div className='row'>
-                <div className='col-md-8'>
-                    <div className='row border-book-detail rounded-3 border-1'>
-                        <div className='col-md-4 p-0'>
-                            <img src={"http://127.0.0.1:8000/bookcover/" + state.book.book_cover_photo + ".jpg"} className="card-img-top" alt="abc" />
-                            <p className='fl-right d-inline'>By <h6 className='d-inline'>{state.book.author?.author_name}</h6></p>
-                        </div>
+            {Object.keys(state.book).map(
+                (item, i) => (
+                    <div className='row'>
                         <div className='col-md-8'>
-                            <div className='mt-3'>
-                                <h4>{state.book.book_title}</h4>
-                                <p>{state.book.book_summary}</p>
+                            <div className='row border-book-detail rounded-3 border-1'>
+                                <div className='col-md-4 p-0'>
+                                    <img src={"http://localhost:8000/bookcover/" + state.book[item].book_cover_photo + ".jpg"} className="card-img-top" alt="abc" />
+                                    <p className='fl-right d-inline'>By <h6 className='d-inline'>{state.book[item].author_name}</h6></p>
+                                </div>
+                                <div className='col-md-8'>
+                                    <div className='mt-3'>
+                                        <h4>{state.book[item].book_title}</h4>
+                                        <p>{state.book[item].book_summary}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='border-book-detail rounded-3 border-1'>
+                                <div className='bg-quantity px-5 text-white border-book-detail rounded-3 border-1'>
+                                    {state.book[item].discount_price != null ? (
+                                        <div>
+                                            <div className='d-inline text-decoration-line-through fw-light fs-5' style={{ marginRight: "10px" }}>
+                                                ${state.book[item].book_price}
+                                            </div>
+                                            <div className='d-inline fw-bold fs-4'>
+                                                ${state.book[item].discount_price}
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className='d-inline fw-bold fs-4'>
+                                            ${state.book[item].book_price}
+                                        </div>
+                                    )}
+
+                                </div>
+                                <div className='mt-5 px-5'>
+                                    <h5>Quantity</h5>
+                                    <div className="bm-flex bg-quantity text-white height-quantity px-2 rounded-3 border-1">
+                                        <div className='fs-2'>-</div>
+                                        <div>1</div>
+                                        <div className='fs-2'>+</div>
+                                    </div>
+                                    <button type="button" className="btn text-white bg-quantity mt-4 w-100 mb-5">Add to cart</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className='col-md-4'>
-                    <div className='border-book-detail rounded-3 border-1'>
-                        <div className='bg-quantity px-5 text-white border-book-detail rounded-3 border-1'>
-                            <div className='d-inline text-decoration-line-through fw-light' style={{ marginRight: "10px" }}>
-                                {state.book.book_price}
-                            </div>
-                            {/* {state.discount.length === 0 ? null : } */}
-                            <div className='d-inline fw-bold fs-4'>
-                                {/* {state.discount.discount_price} */}
-                                $20
-                            </div>
-                        </div>
-                        <div className='mt-5 px-5'>
-                            <h5>Quantity</h5>
-                            <div className="bm-flex bg-quantity text-white height-quantity px-2 rounded-3 border-1">
-                                <div className='fs-2'>-</div>
-                                <div>1</div>
-                                <div className='fs-2'>+</div>
-                            </div>
-                            <button type="button" className="btn text-white bg-quantity mt-4 w-100 mb-5">Add to cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                )
+            )}
             <div className="row mt-5">
-                <div className="col-md-8">
-                    <div className="border-book-detail rounded-3 border-1 py-4 px-3">
+                <div className="col-md-8 border-book-detail rounded-3 border-1">
+                    <div className="py-4 px-3">
                         <h3 className="fs-4 fw-bold d-inline">Customer Reviews </h3>
                         <div className='d-inline fw-light'>(Filltered by 5 star)</div>
                         <div className="d-flex">
