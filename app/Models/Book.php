@@ -40,7 +40,7 @@ class Book extends Model
             ->join('discount', 'book.id', '=', 'discount.book_id')
             ->join('author', 'book.author_id', '=', 'author.id')
             ->select('discount.book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'author.author_name')
-            ->selectraw('book.book_price - discount.discount_price AS reduced_price')
+            ->selectRaw('book.book_price - discount.discount_price AS reduced_price')
             ->groupBy('author.author_name', 'discount.book_id', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
 
         return $onSaleBooks;
@@ -74,5 +74,21 @@ class Book extends Model
             ->selectRaw('avg(review.rating_start) as avg_star');
 
         return $avgRatingStarBooks;
+    }
+
+    public function scopeBookDetail($id)
+    {
+        $bookDetail = DB::table('book')
+            ->join('category', 'book.category_id', '=', 'category.id')
+            ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
+            ->leftJoin('review', 'book.review_id', '=', 'review.id')
+            ->join('author', 'book.author_id', '=', 'author.id')
+            ->where('book.id', '=', $id)
+            //->selectRaw('avg(review.rating_start) as avg_star')
+            //->selectRaw('count()')
+            ->select('book.id as book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'book.book_summary', 'author.author_name')
+            ->groupBy('review.book_id', 'author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
+
+        return $bookDetail;
     }
 }

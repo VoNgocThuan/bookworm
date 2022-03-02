@@ -25,13 +25,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::post('/logout', [AuthController::class, 'logout']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/orders', OrderController::class);
     Route::resource('/cart', CartController::class);
 });
+
 Route::resource('/users', UserController::class);
+
 Route::get('/users/full-name/{id}', [UserController::class, 'showUserFullName']);
+
 Route::get('/books/condition', [BookController::class, 'showBookByFilterSortPagi']);
+
+Route::get('/books/detail/condition', [BookController::class, 'showBookByFilterSortPagi']);
+
+Route::get('/reviews/condition/{id}', [ReviewController::class, 'showBookReviewCondition']);
 
 Route::get('/books/onsale', [BookController::class, 'showTop10OnSaleBooks']);
 

@@ -89,6 +89,12 @@ class ReviewController extends Controller
         ]);
     }
 
+    public function showBookReviewCondition(Request $request, $bookId) {
+        $reviews = $this->reviewRepository->getBookReviewCondition($request, $bookId);
+        
+        return $reviews;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

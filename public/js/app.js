@@ -5217,8 +5217,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var _pages_home_Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/home/Home */ "./resources/js/pages/home/Home.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _pages_detail_BookDetail__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/detail/BookDetail */ "./resources/js/pages/detail/BookDetail.js");
 /* harmony import */ var _pages_shop_Shop__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/shop/Shop */ "./resources/js/pages/shop/Shop.js");
 /* harmony import */ var _pages_login_LoginModal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/login/LoginModal */ "./resources/js/pages/login/LoginModal.js");
@@ -5246,32 +5246,32 @@ var store = (0,redux__WEBPACK_IMPORTED_MODULE_12__.createStore)(_reducers_index_
 function App() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
     className: "App",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.BrowserRouter, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_component_Header_Header__WEBPACK_IMPORTED_MODULE_0__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Routes, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-          path: "/",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            index: true,
-            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_home_Home__WEBPACK_IMPORTED_MODULE_5__["default"], {})
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "/books/:id",
-            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_detail_BookDetail__WEBPACK_IMPORTED_MODULE_6__["default"], {})
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "/shop",
-            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_shop_Shop__WEBPACK_IMPORTED_MODULE_7__["default"], {})
-          })]
-        })
-      })]
-    }), ",", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_login_LoginModal__WEBPACK_IMPORTED_MODULE_8__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_component_Footer_Footer__WEBPACK_IMPORTED_MODULE_1__["default"], {})]
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_component_Header_Header__WEBPACK_IMPORTED_MODULE_0__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Routes, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+        path: "/",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+          index: true,
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_home_Home__WEBPACK_IMPORTED_MODULE_5__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+          path: "/books/:id",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_detail_BookDetail__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+          path: "/shop",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_shop_Shop__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_pages_login_LoginModal__WEBPACK_IMPORTED_MODULE_8__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_component_Footer_Footer__WEBPACK_IMPORTED_MODULE_1__["default"], {})]
   });
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
 if (document.getElementById('root')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_9__.Provider, {
-    store: store,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(App, {})
+  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.BrowserRouter, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_9__.Provider, {
+      store: store,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(App, {})
+    })
   }), document.getElementById('root'));
 }
 
@@ -5372,6 +5372,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Header() {
   var access_token = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useSelector)(function (state) {
     return state.accessToken.currentAccessToken;
@@ -5379,7 +5380,8 @@ function Header() {
   var user_id = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useSelector)(function (state) {
     return state.userId.currentUserId;
   });
-  console.log(access_token);
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useDispatch)();
+  var getLoginData = JSON.parse(localStorage.getItem("loginUserData"));
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     userFullName: ''
@@ -5390,25 +5392,43 @@ function Header() {
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     getUserFullName();
-  }, [user_id.newUserId]);
+  }, [user_id]);
 
   var getUserFullName = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var resUserFullName;
+      var resUserFullName, _resUserFullName;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/users/full-name/".concat(user_id.newUserId));
+              if (!(getLoginData != null)) {
+                _context.next = 7;
+                break;
+              }
 
-            case 2:
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/users/full-name/".concat(getLoginData.data.user_id));
+
+            case 3:
               resUserFullName = _context.sent;
               setState({
                 userFullName: resUserFullName.data.data
               });
+              _context.next = 11;
+              break;
 
-            case 4:
+            case 7:
+              _context.next = 9;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/users/full-name/".concat(user_id.newUserId));
+
+            case 9:
+              _resUserFullName = _context.sent;
+              setState({
+                userFullName: _resUserFullName.data.data
+              });
+
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -5420,6 +5440,28 @@ function Header() {
       return _ref.apply(this, arguments);
     };
   }();
+
+  var signOut = function signOut() {
+    if (getLoginData != null) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post('http://localhost:8000/api/logout', getLoginData.data.access_token).then(function (response) {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          dispatch(setAccessToken(response.data.access_token));
+          dispatch(setUserId(response.data.user_id));
+          localStorage.removeItem("loginUserData");
+          navigate('/');
+        }
+      });
+    } else {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post('http://localhost:8000/api/logout', access_token.newAccessToken).then(function (response) {
+        dispatch(setAccessToken(response.data.access_token));
+        dispatch(setUserId(response.data.user_id));
+        localStorage.removeItem("loginUserData");
+        navigate('/');
+      });
+    }
+  };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
     className: "container",
@@ -5468,7 +5510,7 @@ function Header() {
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
           className: "nav-item",
-          children: access_token != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+          children: getLoginData != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
             to: "/cart",
             className: "nav-link",
             style: {
@@ -5486,7 +5528,7 @@ function Header() {
             },
             children: "Cart(0)"
           })
-        }), access_token != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
+        }), getLoginData != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
           className: "nav-item",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "dropdown",
@@ -5501,9 +5543,10 @@ function Header() {
               className: "dropdown-menu",
               "aria-labelledby": "dropdownMenuButton1",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
                   className: "dropdown-item",
-                  href: "#",
+                  to: "#",
+                  onClick: signOut,
                   children: "Sign Out"
                 })
               })
@@ -6505,6 +6548,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _loginmodal_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loginmodal.css */ "./resources/js/pages/login/loginmodal.css");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/index */ "./resources/js/actions/index.js");
@@ -6530,19 +6574,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
- //Import action dùng để dispatch
+
 
 
 
 
 
 function LoginModal() {
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useDispatch)();
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     email: '',
-    password: '',
-    access_token: ''
+    password: ''
   }),
       _useState2 = _slicedToArray(_useState, 2),
       state = _useState2[0],
@@ -6572,11 +6616,10 @@ function LoginModal() {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-          setState({
-            access_token: response.data.access_token
-          });
           dispatch((0,_actions_index__WEBPACK_IMPORTED_MODULE_4__.setAccessToken)(response.data.access_token));
           dispatch((0,_actions_index__WEBPACK_IMPORTED_MODULE_4__.setUserId)(response.data.user_id));
+          localStorage.setItem("loginUserData", JSON.stringify(response));
+          navigate('/');
         }
       });
     });

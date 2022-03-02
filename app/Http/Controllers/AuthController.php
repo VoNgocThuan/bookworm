@@ -52,4 +52,16 @@ class AuthController extends Controller
             ]);
         }
     }
+
+    public function logout(Request $request)
+    {
+        // Auth::user()->tokens()->where('id', $id)->delete();
+
+        // return response()->json([
+        //     'status_code' => 200,
+        //     'user_id' => '',
+        //     'access_token' => '',
+        //     'token_type' => 'Bearer',
+        // ]);
+    }
 }

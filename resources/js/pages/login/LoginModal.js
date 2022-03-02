@@ -1,16 +1,16 @@
 import Axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom"
 import "./loginmodal.css"
-import { useDispatch } from 'react-redux';
-//Import action dùng để dispatch
+import { useDispatch } from 'react-redux'
 import { setAccessToken, setUserId } from '../../actions/index'
 
 function LoginModal() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [state, setState] = useState({
         email: '',
-        password: '',
-        access_token: ''
+        password: ''
     })
 
     const updateFormInput = e => {
@@ -28,11 +28,10 @@ function LoginModal() {
                 if (response.data.error) {
                     console.log(response.data.error)
                 } else {
-                    setState({
-                        access_token: response.data.access_token
-                    })
                     dispatch(setAccessToken(response.data.access_token));
                     dispatch(setUserId(response.data.user_id));
+                    localStorage.setItem("loginUserData", JSON.stringify(response));
+                    navigate('/');
                 }
             })
         });

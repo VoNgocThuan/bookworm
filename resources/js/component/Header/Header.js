@@ -3,24 +3,58 @@ import Axios from 'axios'
 import { Link } from "react-router-dom";
 import "./header.css"
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
 
 function Header() {
     const access_token = useSelector((state) => state.accessToken.currentAccessToken);
     const user_id = useSelector((state) => state.userId.currentUserId);
-    console.log(access_token);
+    const dispatch = useDispatch();
+    const getLoginData = JSON.parse(localStorage.getItem("loginUserData"));
     const [state, setState] = useState({
         userFullName: ''
     });
 
     useEffect(() => {
         getUserFullName();
-    }, [user_id.newUserId])
+    }, [user_id])
 
     const getUserFullName = async () => {
-        const resUserFullName = await Axios.get(`http://localhost:8000/api/users/full-name/${user_id.newUserId}`);
-        setState({
-            userFullName: resUserFullName.data.data,
-        })
+        if (getLoginData != null) {
+            const resUserFullName = await Axios.get(`http://localhost:8000/api/users/full-name/${getLoginData.data.user_id}`);
+            setState({
+                userFullName: resUserFullName.data.data,
+            })
+        }
+        else {
+            const resUserFullName = await Axios.get(`http://localhost:8000/api/users/full-name/${user_id.newUserId}`);
+            setState({
+                userFullName: resUserFullName.data.data,
+            })
+        }
+    }
+
+    const signOut = function () {
+        if (getLoginData != null) {
+            Axios.post('http://localhost:8000/api/logout', getLoginData.data.access_token).then(response => {
+                if (response.data.error) {
+                    console.log(response.data.error)
+                } else {
+                    dispatch(setAccessToken(response.data.access_token));
+                    dispatch(setUserId(response.data.user_id));
+                    localStorage.removeItem("loginUserData");
+                    navigate('/');
+                }
+            })
+        }
+        else {
+            Axios.post('http://localhost:8000/api/logout', access_token.newAccessToken).then(response => {
+                dispatch(setAccessToken(response.data.access_token));
+                dispatch(setUserId(response.data.user_id));
+                localStorage.removeItem("loginUserData");
+                navigate('/');
+            })
+        }
+
     }
 
     return (
@@ -47,7 +81,7 @@ function Header() {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        {access_token != '' ? (
+                        {getLoginData != null ? (
                             <Link to="/cart" className="nav-link" style={{ textDecoration: 'none' }}>
                                 Cart(0)
                             </Link>
@@ -58,14 +92,16 @@ function Header() {
                         )}
 
                     </li>
-                    {access_token != '' ? (
+                    {getLoginData != null ? (
                         <li className="nav-item">
                             <div className="dropdown">
                                 <button className="btn main-color text-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     {state.userFullName}
                                 </button>
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a className="dropdown-item" href="#">Sign Out</a></li>
+                                    <li>
+                                        <Link className="dropdown-item" to="#" onClick={signOut}>Sign Out</Link>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

@@ -20,16 +20,15 @@ const store = createStore(reducers);
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Header></Header>
-        <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="/books/:id" element={<BookDetail />} />
-            <Route path="/shop" element={<Shop />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>,
+
+      <Header></Header>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Home />} />
+          <Route path="/books/:id" element={<BookDetail />} />
+          <Route path="/shop" element={<Shop />} />
+        </Route>
+      </Routes>
       <LoginModal></LoginModal>
       <Footer></Footer>
     </div>
@@ -40,8 +39,10 @@ export default App;
 
 if (document.getElementById('root')) {
   ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
     , document.getElementById('root'));
 }
