@@ -89,6 +89,24 @@ class ReviewController extends Controller
         ]);
     }
 
+    public function showBookReviewTotal($bookId) {
+        $reviews = $this->reviewRepository->getBookReviewTotal($bookId);
+        
+        return $reviews;
+    }
+
+    public function showBookReviewAvgStar($bookId) {
+        $reviews = $this->reviewRepository->getBookReviewAvgStar($bookId);
+        
+        return $reviews;
+    }
+
+    public function showBookReviewListing($bookId) {
+        $reviews = $this->reviewRepository->getBookReviewListing($bookId);
+        
+        return $reviews;
+    }
+
     public function showBookReviewCondition(Request $request, $bookId) {
         $reviews = $this->reviewRepository->getBookReviewCondition($request, $bookId);
         

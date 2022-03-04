@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux'
 
 function Header() {
+    const [activeMenu, setActiveMenu] = useState('home')
     const access_token = useSelector((state) => state.accessToken.currentAccessToken);
     const user_id = useSelector((state) => state.userId.currentUserId);
     const dispatch = useDispatch();
@@ -66,27 +67,56 @@ function Header() {
 
                 <ul className="nav nav-pills">
                     <li className="nav-item">
-                        <Link to="/" className="nav-link active" aria-current="page" style={{ textDecoration: 'none' }}>
+                        <Link
+                            to="/"
+                            className={activeMenu == 'home' ? 'active nav-link' : 'nav-link'}
+                            aria-current="page"
+                            style={{ textDecoration: 'none' }}
+                            onClick={() => { setActiveMenu('home') }}
+                        >
                             Home
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/shop" className="nav-link" style={{ textDecoration: 'none' }}>
+                        <Link
+                            to="/shop"
+                            className={activeMenu == 'shop' ? 'active nav-link' : 'nav-link'}
+                            style={{ textDecoration: 'none' }}
+                            onClick={() => { setActiveMenu('shop') }}
+                        >
                             Shop
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/about" className="nav-link" style={{ textDecoration: 'none' }}>
+                        <Link
+                            to="/about"
+                            className={activeMenu == 'about' ? 'active nav-link' : 'nav-link'}
+                            style={{ textDecoration: 'none' }}
+                            onClick={() => { setActiveMenu('about') }}
+                        >
                             About
                         </Link>
                     </li>
                     <li className="nav-item">
                         {getLoginData != null ? (
-                            <Link to="/cart" className="nav-link" style={{ textDecoration: 'none' }}>
+                            <Link
+                                to="/cart"
+                                className={activeMenu == 'cart' ? 'active nav-link' : 'nav-link'}
+                                style={{ textDecoration: 'none' }}
+                                onClick={() => { setActiveMenu('cart') }}
+                            >
                                 Cart(0)
                             </Link>
                         ) : (
-                            <Link to="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap" className="nav-link" style={{ textDecoration: 'none' }}>
+                            <Link
+                                to="#"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                data-bs-whatever="@getbootstrap"
+                                className="nav-link"
+                                style={{ textDecoration: 'none' }}
+                                onClick={() => { setActiveMenu('signin') }}
+                            >
                                 Cart(0)
                             </Link>
                         )}
@@ -107,7 +137,15 @@ function Header() {
                         </li>
                     ) : (
                         <li className="nav-item">
-                            <Link to="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap" className="nav-link" style={{ textDecoration: 'none' }}>
+                            <Link
+                                to="#"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                data-bs-whatever="@getbootstrap"
+                                className={activeMenu == 'signin' ? 'active nav-link' : 'nav-link'}
+                                style={{ textDecoration: 'none' }}
+                                onClick={() => { setActiveMenu('signin') }}
+                            >
                                 Sign in
                             </Link>
                         </li>

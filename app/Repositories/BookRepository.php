@@ -176,33 +176,6 @@ class BookRepository implements CrudInterface
         }
     }
 
-    public function getBookReviewCondition(Request $request, $bookId)
-    {
-        $sortArray = $request->query("sort");
-        $paginateValue = $request->query("paginate");
-
-        foreach ($sortArray as $key => $value) {
-            $sortKey = $key;
-            $sortValue = $value;
-        }
-
-        switch ($sortValue) {
-            case ('newestToOldest'):
-                $reviews = DB::table('review')
-                    ->join('book', 'review.book_id', '=', $bookId)
-                    ->paginate($paginateValue);
-
-                return $reviews;
-                break;
-            case ('oldestToNewest'):
-                
-
-                break;
-            default:
-                $msg = 'Something went wrong.';
-        }
-    }
-
     // public function findById($id)
     // {
     //     $books = Book::with('author', 'category', 'review', 'discount')->find($id);

@@ -23,3 +23,12 @@
 .fl-right {
     float: right;
 }
+
+.page-item.active .page-link {
+    background-color: #00AFF0;
+    border-color: #00AFF0;
+}
+
+.page-link {
+    color: #00AFF0;
+}

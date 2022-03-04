@@ -27,12 +27,47 @@ class ReviewRepository implements CrudInterface
         return $reviews;
     }
 
-    //spublic function getBookReview
+    public function getBookReviewListing($bookId)
+    {
+        $reviews = DB::table('review')
+            ->where('book_id', $bookId)
+            ->select('rating_start as star', DB::raw('count(id) as count'))
+            ->groupBy('rating_start')
+            ->get();
+
+        return $reviews;
+    }
+
+    public function getBookReviewTotal($bookId)
+    {
+        $reviews = DB::table('review')
+            ->where('book_id', $bookId)
+            ->count('book_id');
+
+        return $reviews;
+    }
+
+    public function getBookReviewAvgStar($bookId)
+    {
+        $reviews = DB::table('review')
+            ->where('book_id', $bookId)
+            ->avg('rating_start');
+
+        return $reviews;
+    }
 
     public function getBookReviewCondition(Request $request, $bookId)
     {
+        $filterArray = $request->query("filter");
         $sortArray = $request->query("sort");
         $paginateValue = $request->query("paginate");
+
+        if (is_array($filterArray) || is_object($filterArray)) {
+            foreach ($filterArray as $key => $value) {
+                $filterKey = $key;
+                $filterValue = $value;
+            }
+        }
 
         foreach ($sortArray as $key => $value) {
             $sortKey = $key;
@@ -41,21 +76,34 @@ class ReviewRepository implements CrudInterface
 
         switch ($sortValue) {
             case ('newestToOldest'):
-                $reviews = DB::table('review')
-                    ->where('book_id', $bookId)
-                    ->select('rating_start', DB::raw('count(id) as count'))
-                    ->groupBy('rating_start')
-                    //->orderByDesc('review_date')
-                    ->paginate($paginateValue);
+                if ($request->has("filter")) {
+                    $reviews = DB::table('review')
+                        ->where('book_id', $bookId)
+                        ->where('rating_start', $filterValue)
+                        ->orderByDesc('review_date')
+                        ->paginate($paginateValue);
+                } else {
+                    $reviews = DB::table('review')
+                        ->where('book_id', $bookId)
+                        ->orderByDesc('review_date')
+                        ->paginate($paginateValue);
+                }
 
                 return $reviews;
                 break;
             case ('oldestToNewest'):
-                $reviews = DB::table('review')
-                    ->where('book_id', $bookId)
-                    ->orderBy('review_date')
-                    ->paginate($paginateValue);
-
+                if ($request->has("filter")) {
+                    $reviews = DB::table('review')
+                        ->where('book_id', $bookId)
+                        ->where('rating_start', $filterValue)
+                        ->orderBy('review_date')
+                        ->paginate($paginateValue);
+                } else {
+                    $reviews = DB::table('review')
+                        ->where('book_id', $bookId)
+                        ->orderBy('review_date')
+                        ->paginate($paginateValue);
+                }
                 return $reviews;
 
                 break;

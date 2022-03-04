@@ -73,6 +73,16 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function show5CategoryName()
+    {
+        $categories = $this->categoryRepository->get5CategoryNames();
+        return response()->json([
+            'success' => true,
+            'message' => 'Categories Name',
+            'data'    => $categories
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

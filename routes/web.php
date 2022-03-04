@@ -25,6 +25,10 @@ Route::get('/books/{id}', function(){
     return view('welcome');
 });
 
+Route::get('/shop', function(){
+    return view('welcome');
+});
+
 Route::get('/cart', function () {
     return view('welcome');
 });

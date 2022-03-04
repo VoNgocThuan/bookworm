@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import Pagination from "react-js-pagination";
 import "./bookdetail.css"
 
 export default function BookDetail() {
@@ -8,15 +9,146 @@ export default function BookDetail() {
     const [state, setState] = useState({
         book: {},
     });
+
+    const [stateReview, setStateReview] = useState({
+        reviewListing: [],
+        reviewCondition: [],
+        reviewTotal: 0,
+        reviewAvg: 0
+    });
+
+    const [stateSort, setStateSort] = useState({
+        sort: "newestToOldest",
+    });
+
+    const [statePaginate, setStatePaginate] = useState({
+        paginate: 5
+    });
+
+    const [stateFilter, setStateFilter] = useState({
+        filter: null
+    });
+
+    const [statePage, setStatePage] = useState({
+        from: 1,
+        to: 1,
+        activePage: 1,
+        itemsCountPerPage: 0,
+        totalItemsCount: 0,
+    });
+
+    const handleChangeSort = (e) => {
+        setStateSort(prevStateSort => ({
+            ...prevStateSort, sort: e.target.value
+        }));
+    };
+
+    const handleChangePaginate = (e) => {
+        setStatePaginate(prevStatePaginate => ({
+            ...prevStatePaginate, paginate: e.target.value
+        }));
+
+        handlePageChange(1)
+    }
+
+    function handlePageChange(pageNumber) {
+        setStatePage({ activePage: pageNumber });
+    }
+
     useEffect(() => {
-        getBook();
+        getBookData();
     }, [])
-    const getBook = async () => {
+
+    useEffect(() => {
+        getReviewData();
+    }, [stateSort.sort, statePaginate.paginate, stateFilter.filter, statePage.activePage])
+
+    const getBookData = async () => {
         const res = await Axios.get(`http://localhost:8000/api/books/${id}`);
         setState({
             book: res.data.data
         })
     }
+
+    const getReviewData = async () => {
+        const resReviewListing = await Axios.get(`http://localhost:8000/api/reviews/listing/${id}`);
+        const resReviewTotal = await Axios.get(`http://localhost:8000/api/reviews/total/${id}`);
+        const resReviewAvg = await Axios.get(`http://localhost:8000/api/reviews/avg/${id}`);
+        const reviewAvgStar = Math.round(resReviewAvg.data * 10) / 10;
+
+        if (stateFilter.filter != null) {
+            const resReviewCondition = await Axios.get(`http://localhost:8000/api/reviews/condition/${id}?filter[rating_star]=${stateFilter.filter}&sort[type]=${stateSort.sort}&paginate=${statePaginate.paginate}&page=${statePage.activePage}`)
+            const newArray = resReviewListing.data.slice();
+            setStateReview({
+                reviewTotal: resReviewTotal.data,
+                reviewAvg: reviewAvgStar,
+                reviewListing: resReviewListing.data,
+                reviewCondition: resReviewCondition.data.data
+            })
+            setStatePage({
+                from: resReviewCondition.data.from,
+                to: resReviewCondition.data.to,
+                activePage: resReviewCondition.data.current_page,
+                itemsCountPerPage: resReviewCondition.data.per_page,
+                totalItemsCount: resReviewCondition.data.total
+            })
+            for (var i = 1; i <= 5; i++) {
+                if (starExists(resReviewListing.data, i) == false) {
+                    const newObj = { 'star': i, 'count': 0 }
+                    newArray.push(newObj);
+                }
+            }
+            newArray.sort((a, b) => (a.star < b.star) ? 1 : -1)
+            setStateReview({
+                reviewTotal: resReviewTotal.data,
+                reviewAvg: reviewAvgStar,
+                reviewListing: newArray,
+                reviewCondition: resReviewCondition.data.data
+            })
+        }
+        else {
+            const resReviewCondition = await Axios.get(`http://localhost:8000/api/reviews/condition/${id}?sort[type]=${stateSort.sort}&paginate=${statePaginate.paginate}&page=${statePage.activePage}`)
+            const newArray = resReviewListing.data.slice();
+            setStateReview({
+                reviewTotal: resReviewTotal.data,
+                reviewAvg: reviewAvgStar,
+                reviewListing: resReviewListing.data,
+                reviewCondition: resReviewCondition.data.data
+            })
+            setStatePage({
+                from: resReviewCondition.data.from,
+                to: resReviewCondition.data.to,
+                activePage: resReviewCondition.data.current_page,
+                itemsCountPerPage: resReviewCondition.data.per_page,
+                totalItemsCount: resReviewCondition.data.total
+            })
+            for (var i = 1; i <= 5; i++) {
+                if (starExists(resReviewListing.data, i) == false) {
+                    const newObj = { 'star': i, 'count': 0 }
+                    newArray.push(newObj);
+                }
+            }
+            newArray.sort((a, b) => (a.star < b.star) ? 1 : -1)
+            setStateReview({
+                reviewTotal: resReviewTotal.data,
+                reviewAvg: reviewAvgStar,
+                reviewListing: newArray,
+                reviewCondition: resReviewCondition.data.data
+            })
+        }
+    }
+
+    function starExists(arr, star) {
+        return arr.some(function (el) {
+            return el.star == star;
+        });
+    }
+
+    const getBookAndReviewData = async () => {
+        getBookData();
+        getReviewData();
+    }
+
     return (
         <div className='container'>
             {Object.keys(state.book).map(
@@ -25,7 +157,11 @@ export default function BookDetail() {
                         <div className='col-md-8'>
                             <div className='row border-book-detail rounded-3 border-1'>
                                 <div className='col-md-4 p-0'>
-                                    <img src={"http://localhost:8000/bookcover/" + state.book[item].book_cover_photo + ".jpg"} className="card-img-top" alt="abc" />
+                                    {state.book[item].book_cover_photo != null ? (
+                                        <img src={"http://localhost:8000/bookcover/" + state.book[item].book_cover_photo + ".jpg"} className="card-img-top" alt="abc" />
+                                    ) : (
+                                        <img src={"http://localhost:8000/bookcover/bookNull.jpg"} className="card-img-top" alt="abc" />
+                                    )}
                                     <p className='fl-right d-inline'>By <h6 className='d-inline'>{state.book[item].author_name}</h6></p>
                                 </div>
                                 <div className='col-md-8'>
@@ -73,64 +209,77 @@ export default function BookDetail() {
                 <div className="col-md-8 border-book-detail rounded-3 border-1">
                     <div className="py-4 px-3">
                         <h3 className="fs-4 fw-bold d-inline">Customer Reviews </h3>
-                        <div className='d-inline fw-light'>(Filltered by 5 star)</div>
+                        {stateFilter.filter != null ? (
+                            <div className='d-inline fw-light'>(Filltered by {stateFilter.filter} stars)</div>
+                        ) : (
+                            <div></div>
+                        )}
+
                         <div className="d-flex">
                             <div>
-                                <span className="fs-3 fw-bold">4.6</span>
-                                <div className='star-mr text-decoration-underline fw-bold'>(3.134)</div>
+                                <span className="fs-3 fw-bold">{stateReview.reviewAvg}</span>
+                                <div className='star-mr text-decoration-underline fw-bold'>({stateReview.reviewTotal})</div>
                             </div>
                             <div>
                                 <span className="fs-3 fw-bold">Star</span>
                                 <div>
-                                    <span className='px-1 text-decoration-underline'>5 star(200)</span> |
-                                    <span className='px-1 text-decoration-underline'>4 star(200)</span> |
-                                    <span className='px-1 text-decoration-underline'>3 star(200)</span> |
-                                    <span className='px-1 text-decoration-underline'>2 star(200)</span> |
-                                    <span className='px-1 text-decoration-underline'>1 star(200)</span>
+                                    {Object.keys(stateReview.reviewListing).map(
+                                        (item, i) => (
+                                            <span className='px-1 text-decoration-underline' role='button' onClick={() => setStateFilter({ filter: stateReview.reviewListing[item].star })}>
+                                                {stateReview.reviewListing[item].star} star({stateReview.reviewListing[item].count})
+                                            </span>
+                                        ))}
+                                    {stateFilter.filter != null ? (
+                                        <span className='px-1 text-decoration-underline' role='button' onClick={() => setStateFilter({ filter: null })}>
+                                            all star({stateReview.reviewTotal})
+                                        </span>
+                                    ) : (
+                                        <div></div>
+                                    )}
+
                                 </div>
                             </div>
                         </div>
+
                         <div className="d-flex justify-content-between">
-                            <p className="mt-3" style={{ marginRight: "20px" }}>Showing 1-12 of 3134 reviews</p>
+                            <p className="mt-3" style={{ marginRight: "20px" }}>Showing {statePage.from}-{statePage.to} of {stateReview.reviewTotal} reviews</p>
                             <div className='d-flex mt-3'>
-                                <div className="dropdown" style={{ marginRight: "10px" }}>
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Sort by on sale
-                                    </button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a className="dropdown-item" href="#">Action</a></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                                    </ul>
-                                </div>
-                                <div className="dropdown">
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Show 20
-                                    </button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a className="dropdown-item" href="#">Action</a></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
-                                </div>
+                                <select value={stateSort.sort} onChange={handleChangeSort} style={{ marginRight: "10px" }} className="dropdown btn bg-quantity text-white">
+                                    <option value="newestToOldest" className='bg-quantity text-white'>Sort by date: newest to oldest</option>
+                                    <option value="oldestToNewest" className='bg-quantity text-white'>Sort by date: oldest to newest</option>
+                                </select>
+                                <select value={statePaginate.paginate} onChange={handleChangePaginate} style={{ marginRight: "10px" }} className="dropdown btn bg-quantity text-white">
+                                    <option value="5" className='bg-quantity text-white'>Show 5</option>
+                                    <option value="15" className='bg-quantity text-white'>Show 15</option>
+                                    <option value="20" className='bg-quantity text-white'>Show 20</option>
+                                    <option value="25" className='bg-quantity text-white'>Show 25</option>
+                                </select>
                             </div>
                         </div>
-                        <div className="col-md-12">
-                            <h4 className='fw-bold fs-5'>Review Title</h4>
-                            <p>I throw myself down among the tall grass by the trickling stream; and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks.</p>
+                        {Object.keys(stateReview.reviewCondition).map((item, i) => (
+                            <div className="col-md-12 mt-5">
+                                <h4 className='fw-bold fs-5 d-inline'>{stateReview.reviewCondition[item].review_title}</h4> |
+                                <span className='d-inline'> {stateReview.reviewCondition[item].rating_start} stars</span>
+                                <p>{stateReview.reviewCondition[item].review_details}</p>
+                                <p>{stateReview.reviewCondition[item].review_date}</p>
+                                <hr className='mt-5'></hr>
+                            </div>
+                        ))}
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                activePage={statePage.activePage}
+                                itemsCountPerPage={statePage.itemsCountPerPage}
+                                totalItemsCount={statePage.totalItemsCount}
+                                pageRangeDisplayed={3}
+                                //firstPageText="First"
+                                prevPageText="Previous"
+                                nextPageText="Next"
+                                //lastPageText="Last"
+                                onChange={handlePageChange}
+                                itemClass='page-item'
+                                linkClass='page-link'
+                            />
                         </div>
-                        <nav aria-label="Page navigation example">
-                            <ul className="pagination justify-content-center">
-                                <li className="page-item">
-                                    <a className="page-link" href="#" tabindex="-1">Previous</a>
-                                </li>
-                                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                <li className="page-item"><a className="page-link" href="#">2</a></li>
-                                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
                 <div className="col-md-4">

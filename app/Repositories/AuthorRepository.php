@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\CrudInterface;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AuthorRepository implements CrudInterface
 {
@@ -18,6 +19,16 @@ class AuthorRepository implements CrudInterface
         $authors = Author::find($id);
         return $authors;
     }
+    public function get10AuthorNames()
+    {
+        $authors = DB::table('author')
+            ->select('author_name')
+            ->orderBy('author_name')
+            ->take(10)
+            ->get();
+
+        return $authors;
+    }
     public function create(Request $request)
     {
     }
@@ -26,13 +37,5 @@ class AuthorRepository implements CrudInterface
     }
     public function delete($id)
     {
-    }
-    public function scopeName($query, $request)
-    {
-        if ($request->has('category_name')) {
-            $query->where('category_name', 'LIKE', '%' . $request->category_name . '%');
-        }
-
-        return $query;
     }
 }

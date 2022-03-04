@@ -73,6 +73,16 @@ class AuthorController extends Controller
         ]);
     }
 
+    public function show10AuthorNames()
+    {
+        $authors = $this->authorRepository->get10AuthorNames();
+        return response()->json([
+            'success' => true,
+            'message' => 'Author Name',
+            'data'    => $authors
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

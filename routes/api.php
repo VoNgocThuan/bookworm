@@ -38,10 +38,6 @@ Route::get('/users/full-name/{id}', [UserController::class, 'showUserFullName'])
 
 Route::get('/books/condition', [BookController::class, 'showBookByFilterSortPagi']);
 
-Route::get('/books/detail/condition', [BookController::class, 'showBookByFilterSortPagi']);
-
-Route::get('/reviews/condition/{id}', [ReviewController::class, 'showBookReviewCondition']);
-
 Route::get('/books/onsale', [BookController::class, 'showTop10OnSaleBooks']);
 
 Route::get('/books/recommended', [BookController::class, 'showTop8RecommendedBooks']);
@@ -50,10 +46,22 @@ Route::get('/books/popular', [BookController::class, 'showTop8PopularBooks']);
 
 Route::resource('/books', BookController::class);
 
-Route::resource('/categories', CategoryController::class);
+//Route::resource('/categories', CategoryController::class);
 
-Route::resource('/authors', AuthorController::class);
+Route::get('/categories/name-shoppage', [CategoryController::class, 'show5CategoryName']);
+
+//Route::resource('/authors', AuthorController::class);
+
+Route::get('/authors/name-shoppage', [AuthorController::class, 'show10AuthorNames']);
 
 Route::post('/reviews', [ReviewController::class, 'store']);
 
 Route::get('/reviews/{id}', [ReviewController::class, 'showReviewOfBook']);
+
+Route::get('/reviews/total/{id}', [ReviewController::class, 'showBookReviewTotal']);
+
+Route::get('/reviews/avg/{id}', [ReviewController::class, 'showBookReviewAvgStar']);
+
+Route::get('/reviews/listing/{id}', [ReviewController::class, 'showBookReviewListing']);
+
+Route::get('/reviews/condition/{id}', [ReviewController::class, 'showBookReviewCondition']);
