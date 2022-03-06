@@ -29,12 +29,24 @@ export default function BookDetail() {
         filter: null
     });
 
+    const [stateQty, setStateQty] = useState({
+        quantity: 1
+    });
+
     const [statePage, setStatePage] = useState({
         from: 1,
         to: 1,
         activePage: 1,
         itemsCountPerPage: 0,
         totalItemsCount: 0,
+    });
+
+    const [stateCart, setStateCart] = useState({
+        cart: {},
+    });
+
+    const [stateStatus, setStateStatus] = useState({
+        status: undefined
     });
 
     const handleChangeSort = (e) => {
@@ -55,9 +67,35 @@ export default function BookDetail() {
         setStatePage({ activePage: pageNumber });
     }
 
+    function handleAddToCart() {
+        if ((stateCart.cart.quantity + stateQty.quantity < 9))
+            Object.keys(state.book).map((item) => (
+                Axios.post('http://localhost:8000/api/cart', {
+                    id: id,
+                    quantity: stateQty.quantity,
+                    book_title: state.book[item].book_title,
+                    book_price: state.book[item].book_price,
+                    book_cover_photo: state.book[item].book_cover_photo,
+                    discount_price: state.book[item].discount_price,
+                    author_name: state.book[item].author_name
+                }).then(
+                    setStateStatus({
+                        type: 'success'
+                    })
+
+                ).catch((error) => {
+                    setStatus({ type: 'error', error });
+                })
+            ))
+    }
+
     useEffect(() => {
         getBookData();
     }, [])
+
+    useEffect(() => {
+        getCartDetail();
+    }, [stateCart.cart])
 
     useEffect(() => {
         getReviewData();
@@ -67,6 +105,14 @@ export default function BookDetail() {
         const res = await Axios.get(`http://localhost:8000/api/books/${id}`);
         setState({
             book: res.data.data
+        })
+    }
+
+    const getCartDetail = async () => {
+        const resCartList = await Axios.get(`http://localhost:8000/api/cart/${id}`);
+
+        setStateCart({
+            cart: resCartList.data
         })
     }
 
@@ -144,10 +190,7 @@ export default function BookDetail() {
         });
     }
 
-    const getBookAndReviewData = async () => {
-        getBookData();
-        getReviewData();
-    }
+    console.log(stateCart)
 
     return (
         <div className='container'>
@@ -193,12 +236,43 @@ export default function BookDetail() {
                                 </div>
                                 <div className='mt-5 px-5'>
                                     <h5>Quantity</h5>
-                                    <div className="bm-flex bg-quantity text-white height-quantity px-2 rounded-3 border-1">
-                                        <div className='fs-2'>-</div>
-                                        <div>1</div>
-                                        <div className='fs-2'>+</div>
+                                    <div className="bm-flex bg-quantity text-white height-quantity rounded-3 border-1">
+                                        <button
+                                            type='button'
+                                            className='btn btn-info text-white'
+                                            onClick={() => {
+                                                if (stateQty.quantity > 1) {
+                                                    setStateQty({
+                                                        quantity: stateQty.quantity - 1
+                                                    })
+                                                }
+                                            }}
+                                        >
+                                            -
+                                        </button>
+                                        <div>{stateQty.quantity}</div>
+                                        <button
+                                            type='button'
+                                            className='btn btn-info text-white'
+                                            onClick={() => {
+                                                if (stateQty.quantity < 8) {
+                                                    setStateQty({
+                                                        quantity: stateQty.quantity + 1
+                                                    })
+                                                }
+                                            }}
+                                        >
+                                            +
+                                        </button>
                                     </div>
-                                    <button type="button" className="btn text-white bg-quantity mt-4 w-100 mb-5">Add to cart</button>
+
+                                    <button
+                                        type="button"
+                                        className="btn text-white bg-quantity mt-4 w-100 mb-5"
+                                        onClick={handleAddToCart}
+                                    >
+                                        Add to cart
+                                    </button>
                                 </div>
                             </div>
                         </div>

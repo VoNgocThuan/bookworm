@@ -182,7 +182,7 @@ class BookRepository implements CrudInterface
     //     return $books;
     // }
 
-    public function findbyId($id)
+    public function findById($id)
     {
         $bookDetail = DB::table('book')
             ->join('category', 'book.category_id', '=', 'category.id')

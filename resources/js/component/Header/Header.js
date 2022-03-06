@@ -125,7 +125,13 @@ function Header() {
                     {getLoginData != null ? (
                         <li className="nav-item">
                             <div className="dropdown">
-                                <button className="btn main-color text-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button
+                                    className="btn main-color text-white dropdown-toggle"
+                                    type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style={{ marginLeft: "5px" }}
+                                >
                                     {state.userFullName}
                                 </button>
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">

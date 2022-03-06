@@ -2,83 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function cartList()
     {
-        //
+        $cartItems = CartFacade::getContent();
+        // dd($cartItems);
+        return $cartItems;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function addToCart(Request $request)
     {
-        //
+        $add = CartFacade::add([
+            'id' => $request->id,
+            'name' => $request->book_title,
+            'price' => $request->book_price,
+            'quantity' => $request->quantity,
+            'attributes' => array(
+                'image' => $request->book_cover_photo,
+                'discount_price' => $request->discount_price,
+                'author_name' => $request->author_name
+            )
+        ]);
+
+        if ($add) {
+            return "Thêm thành công vào giỏ hàng";
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getCartDetail(Request $request)
     {
-        //
+        return CartFacade::get($request->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function updateCartIncrement(Request $request)
     {
-        //
+        $increment = CartFacade::update($request->id, [
+            'quantity' => [
+                'relative' => false,
+                'value' => $request->quantity + 1
+            ],
+        ]);
+        if ($increment) {
+            return "Tăng số lượng thành công";
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function updateCartDecrement(Request $request)
     {
-        //
+        $decrement = CartFacade::update($request->id, [
+            'quantity' => [
+                'relative' => false,
+                'value' => $request->quantity - 1
+            ],
+        ]);
+        if ($decrement) {
+            return "Giảm số lượng thành công";
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function removeCart(Request $request)
     {
-        //
+        CartFacade::remove($request->id);
+        session()->flash('success', 'Item Cart Remove Successfully !');
+
+        return redirect()->route('cart.list');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function clearAllCart()
     {
-        //
+        $clear = CartFacade::clear();
+
+        if ($clear) {
+            return "Xóa thành công";
+        }
     }
 }

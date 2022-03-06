@@ -29,7 +29,6 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/orders', OrderController::class);
-    Route::resource('/cart', CartController::class);
 });
 
 Route::resource('/users', UserController::class);
@@ -65,3 +64,11 @@ Route::get('/reviews/avg/{id}', [ReviewController::class, 'showBookReviewAvgStar
 Route::get('/reviews/listing/{id}', [ReviewController::class, 'showBookReviewListing']);
 
 Route::get('/reviews/condition/{id}', [ReviewController::class, 'showBookReviewCondition']);
+
+Route::get('cart', [CartController::class, 'cartList']);
+Route::post('cart', [CartController::class, 'addToCart']);
+Route::get('cart/{id}', [CartController::class, 'getCartDetail']);
+Route::put('update-cart-increment', [CartController::class, 'updateCartIncrement']);
+Route::put('update-cart-decrement', [CartController::class, 'updateCartDecrement']);
+Route::post('remove', [CartController::class, 'removeCart']);
+Route::get('clear', [CartController::class, 'clearAllCart']);

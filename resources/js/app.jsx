@@ -15,6 +15,9 @@ import LoginModal from './pages/login/LoginModal';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "./reducers/index";
+import Cart from './pages/cart/Cart';
+import About from './pages/about/About';
+
 const store = createStore(reducers);
 
 function App() {
@@ -27,6 +30,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
         </Route>
       </Routes>
       <LoginModal></LoginModal>

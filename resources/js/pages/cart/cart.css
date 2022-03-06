@@ -1,0 +1,13 @@
+.btn-qty {
+    color: white;
+    background-color: #00AFF0;
+}
+
+th {
+    text-align: left;
+    width: 100px;   
+}
+
+td {
+    overflow: hidden;
+}
