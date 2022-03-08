@@ -305,7 +305,7 @@ export default function Shop() {
               }
               return (
                 <div className="col-md-3" key={i}>
-                  <Link to={`books/${item.book_id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`/books/${item.book_id}`} style={{ textDecoration: 'none' }}>
                     <div className='card border border-1 h-100'>
                       <img src={"http://localhost:8000/assets/bookcover/" + item.book_cover_photo + ".jpg"} className="card-img-top img-book-card" alt="Image Error" />
                       <div className="card-body">

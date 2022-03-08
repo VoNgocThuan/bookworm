@@ -23,7 +23,6 @@ const store = createStore(reducers);
 function App() {
   return (
     <div className="App">
-
       <Header></Header>
       <Routes>
         <Route path="/">

@@ -2,10 +2,13 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Pagination from "react-js-pagination";
-import "./bookdetail.css"
+import "./bookdetail.css";
+import { useDispatch } from 'react-redux'
+import { setTotalCartQty } from '../../actions/index'
 
 export default function BookDetail() {
     let { id } = useParams();
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         book: {},
     });
@@ -49,6 +52,10 @@ export default function BookDetail() {
         status: undefined
     });
 
+    const [stateCartQty, setStateCartQty] = useState({
+        total: 0
+    });
+
     const handleChangeSort = (e) => {
         setStateSort(prevStateSort => ({
             ...prevStateSort, sort: e.target.value
@@ -68,7 +75,7 @@ export default function BookDetail() {
     }
 
     function handleAddToCart() {
-        if ((stateCart.cart.quantity + stateQty.quantity < 9))
+        if (stateCart.cart == null) {
             Object.keys(state.book).map((item) => (
                 Axios.post('http://localhost:8000/api/cart', {
                     id: id,
@@ -79,23 +86,31 @@ export default function BookDetail() {
                     discount_price: state.book[item].discount_price,
                     author_name: state.book[item].author_name
                 }).then(
-                    setStateStatus({
-                        type: 'success'
-                    })
-
-                ).catch((error) => {
-                    setStatus({ type: 'error', error });
-                })
+                    getCartTotalQuantity()
+                )
             ))
+        }
+        else {
+            handleUpdateCartQty();
+        }
+    }
+
+    function handleUpdateCartQty() {
+        if (stateCart.cart.quantity + stateQty.quantity < 9) {
+            Axios.put('http://localhost:8000/api/update-cart', {
+                id: id,
+                quantity: stateCart.cart.quantity + stateQty.quantity
+            }).then(
+                getCartTotalQuantity()
+            )
+        }
     }
 
     useEffect(() => {
         getBookData();
-    }, [])
-
-    useEffect(() => {
         getCartDetail();
-    }, [stateCart.cart])
+        //getCartTotalQuantity();
+    }, [])
 
     useEffect(() => {
         getReviewData();
@@ -110,10 +125,13 @@ export default function BookDetail() {
 
     const getCartDetail = async () => {
         const resCartList = await Axios.get(`http://localhost:8000/api/cart/${id}`);
-
-        setStateCart({
-            cart: resCartList.data
-        })
+        if (resCartList.data == "") {
+            setStateCart({ cart: null })
+        } else {
+            setStateCart({
+                cart: resCartList.data
+            })
+        }
     }
 
     const getReviewData = async () => {
@@ -184,13 +202,17 @@ export default function BookDetail() {
         }
     }
 
+    const getCartTotalQuantity = async () => {
+        const res = await Axios.get('http://localhost:8000/api/cart/total-qty');
+        dispatch(setTotalCartQty(res.data))
+        setStateCartQty({ total: res.data })
+    }
+
     function starExists(arr, star) {
         return arr.some(function (el) {
             return el.star == star;
         });
     }
-
-    console.log(stateCart)
 
     return (
         <div className='container'>
@@ -269,7 +291,9 @@ export default function BookDetail() {
                                     <button
                                         type="button"
                                         className="btn text-white bg-quantity mt-4 w-100 mb-5"
-                                        onClick={handleAddToCart}
+                                        onClick={
+                                            handleAddToCart
+                                        }
                                     >
                                         Add to cart
                                     </button>

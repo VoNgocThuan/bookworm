@@ -67,7 +67,10 @@ Route::get('/reviews/condition/{id}', [ReviewController::class, 'showBookReviewC
 
 Route::get('cart', [CartController::class, 'cartList']);
 Route::post('cart', [CartController::class, 'addToCart']);
+Route::get('cart/total', [CartController::class, 'totalCart']);
+Route::get('cart/total-qty', [CartController::class, 'totalQuantity']);
 Route::get('cart/{id}', [CartController::class, 'getCartDetail']);
+Route::put('update-cart', [CartController::class, 'updateCart']);
 Route::put('update-cart-increment', [CartController::class, 'updateCartIncrement']);
 Route::put('update-cart-decrement', [CartController::class, 'updateCartDecrement']);
 Route::post('remove', [CartController::class, 'removeCart']);

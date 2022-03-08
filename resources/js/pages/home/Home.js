@@ -73,7 +73,6 @@ export default function Home() {
                         <div className="carousel-inner mg-auto w-80 p-3">
                             <div className="carousel-item active">
                                 <div className='row'>
-                                    {/* {renderListItem(state.bookList)} */}
                                     {state.onsaleBookList?.slice(0, 4).map((item, i) => {
                                         if (item.book_cover_photo == null) {
                                             item.book_cover_photo = "bookNull";

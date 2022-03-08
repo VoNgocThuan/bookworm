@@ -11,10 +11,23 @@ class CartController extends Controller
     public function cartList()
     {
         $cartItems = CartFacade::getContent();
-        // dd($cartItems);
+
         return $cartItems;
     }
 
+    public function totalCart()
+    {
+        $cartTotal = CartFacade::getTotal();
+
+        return $cartTotal;
+    }
+
+    public function totalQuantity()
+    {
+        $cartTotalQuantity = CartFacade::getTotalQuantity();
+
+        return $cartTotalQuantity;
+    }
 
     public function addToCart(Request $request)
     {
@@ -38,6 +51,19 @@ class CartController extends Controller
     public function getCartDetail(Request $request)
     {
         return CartFacade::get($request->id);
+    }
+
+    public function updateCart(Request $request)
+    {
+        $update = CartFacade::update($request->id, [
+            'quantity' => [
+                'relative' => false,
+                'value' => $request->quantity
+            ],
+        ]);
+        if ($update) {
+            return "Cập nhật số lượng thành công";
+        }
     }
 
     public function updateCartIncrement(Request $request)

@@ -11,3 +11,10 @@ export const setUserId = function (newUserId) {
       payload: { newUserId },
   };
 };
+
+export const setTotalCartQty = function (newTotalCartQty) {
+  return {
+      type: 'ADD_TOTAL_CART_QTY',
+      payload: { newTotalCartQty },
+  };
+};

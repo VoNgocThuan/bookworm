@@ -3,7 +3,8 @@ import Axios from 'axios'
 import { Link } from "react-router-dom";
 import "./header.css"
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
+import { setTotalCartQty } from '../../actions/index'
 
 function Header() {
     const [activeMenu, setActiveMenu] = useState('home')
@@ -11,13 +12,25 @@ function Header() {
     const user_id = useSelector((state) => state.userId.currentUserId);
     const dispatch = useDispatch();
     const getLoginData = JSON.parse(localStorage.getItem("loginUserData"));
+    const totalCartQty = useSelector((state) => state.totalCartQty.currentTotalCartQty);
+
     const [state, setState] = useState({
         userFullName: ''
     });
 
+    const [stateCartTotalQty, setStateCartTotalQty] = useState({
+        cartTotalQty: 0,
+    });
+
+    console.log('totalCartQty', totalCartQty.newTotalCartQty)
+
     useEffect(() => {
         getUserFullName();
     }, [user_id])
+
+    useEffect(() => {
+        getCartTotalQuantity();
+    }, [])
 
     const getUserFullName = async () => {
         if (getLoginData != null) {
@@ -32,6 +45,11 @@ function Header() {
                 userFullName: resUserFullName.data.data,
             })
         }
+    }
+
+    const getCartTotalQuantity = async () => {
+        const res = await Axios.get('http://localhost:8000/api/cart/total-qty');
+        dispatch(setTotalCartQty(res.data))
     }
 
     const signOut = function () {
@@ -105,7 +123,12 @@ function Header() {
                                 style={{ textDecoration: 'none' }}
                                 onClick={() => { setActiveMenu('cart') }}
                             >
-                                Cart(0)
+                                {/* Cart({stateCartTotalQty.cartTotalQty}) */}
+                                {totalCartQty.newTotalCartQty != null ? (
+                                    <div>Cart({totalCartQty.newTotalCartQty})</div>
+                                ) : (
+                                    <div>Cart(0)</div>
+                                )}
                             </Link>
                         ) : (
                             <Link
@@ -117,7 +140,7 @@ function Header() {
                                 style={{ textDecoration: 'none' }}
                                 onClick={() => { setActiveMenu('signin') }}
                             >
-                                Cart(0)
+                                Cart({totalCartQty.newTotalCartQty})
                             </Link>
                         )}
 
