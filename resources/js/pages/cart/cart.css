@@ -21,3 +21,16 @@ td {
 .product-info {
     display: flex;
 }
+
+.old-price {
+    font-size: 14px;
+    color: darkgray;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: #00AFF0;
+}

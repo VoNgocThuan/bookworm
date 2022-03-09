@@ -28,8 +28,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('/orders', OrderController::class);
+    
 });
+
+//Route::resource('/orders', OrderController::class);
+
+Route::post('/orders', [OrderController::class, 'storeOrder']);
 
 Route::resource('/users', UserController::class);
 
@@ -65,13 +69,13 @@ Route::get('/reviews/listing/{id}', [ReviewController::class, 'showBookReviewLis
 
 Route::get('/reviews/condition/{id}', [ReviewController::class, 'showBookReviewCondition']);
 
-Route::get('cart', [CartController::class, 'cartList']);
-Route::post('cart', [CartController::class, 'addToCart']);
-Route::get('cart/total', [CartController::class, 'totalCart']);
-Route::get('cart/total-qty', [CartController::class, 'totalQuantity']);
-Route::get('cart/{id}', [CartController::class, 'getCartDetail']);
-Route::put('update-cart', [CartController::class, 'updateCart']);
-Route::put('update-cart-increment', [CartController::class, 'updateCartIncrement']);
-Route::put('update-cart-decrement', [CartController::class, 'updateCartDecrement']);
-Route::post('remove', [CartController::class, 'removeCart']);
+Route::get('/cart', [CartController::class, 'cartList']);
+Route::post('/cart', [CartController::class, 'addToCart']);
+Route::get('/cart/total', [CartController::class, 'totalCart']);
+Route::get('/cart/total-qty', [CartController::class, 'totalQuantity']);
+Route::get('/cart/{id}', [CartController::class, 'getCartDetail']);
+Route::put('/cart/update-cart', [CartController::class, 'updateCart']);
+Route::put('/cart/update-cart-increment', [CartController::class, 'updateCartIncrement']);
+Route::put('/cart/update-cart-decrement', [CartController::class, 'updateCartDecrement']);
+Route::post('/cart/remove', [CartController::class, 'removeCart']);
 Route::get('clear', [CartController::class, 'clearAllCart']);

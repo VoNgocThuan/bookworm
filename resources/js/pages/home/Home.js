@@ -67,7 +67,11 @@ export default function Home() {
                     </div>
                 </div>
                 {isLoading ? (
-                    <div>Loading ...</div>
+                    <div className="text-center">
+                        <div className="spinner-border text-info" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                 ) : (
                     <div id="carouselExampleControls" className="carousel slide border border-1" data-bs-ride="carousel">
                         <div className="carousel-inner mg-auto w-80 p-3">
@@ -227,7 +231,11 @@ export default function Home() {
                         </li>
                     </ul>
                     {isLoading ? (
-                        <div>Loading ...</div>
+                        <div className="text-center">
+                            <div className="spinner-border text-info" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     ) : (
                         <div className="tab-content border border-1" id="pills-tImage Errorontent">
                             <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">

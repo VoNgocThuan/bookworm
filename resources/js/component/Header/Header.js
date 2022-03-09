@@ -22,8 +22,6 @@ function Header() {
         cartTotalQty: 0,
     });
 
-    console.log('totalCartQty', totalCartQty.newTotalCartQty)
-
     useEffect(() => {
         getUserFullName();
     }, [user_id])

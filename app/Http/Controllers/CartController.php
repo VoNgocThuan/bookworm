@@ -31,14 +31,19 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+        if($request->discount_price == null) {
+            $book_price = $request->book_price;
+        } else {
+            $book_price = $request->discount_price;
+        }
         $add = CartFacade::add([
             'id' => $request->id,
             'name' => $request->book_title,
-            'price' => $request->book_price,
+            'price' => $book_price,
             'quantity' => $request->quantity,
             'attributes' => array(
                 'image' => $request->book_cover_photo,
-                'discount_price' => $request->discount_price,
+                'old_price' => $request->book_price,
                 'author_name' => $request->author_name
             )
         ]);
@@ -94,10 +99,11 @@ class CartController extends Controller
 
     public function removeCart(Request $request)
     {
-        CartFacade::remove($request->id);
-        session()->flash('success', 'Item Cart Remove Successfully !');
-
-        return redirect()->route('cart.list');
+        $remove = CartFacade::remove($request->id);
+        
+        if ($remove) {
+            return "Xóa thành công";
+        }
     }
 
     public function clearAllCart()

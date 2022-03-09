@@ -120,7 +120,7 @@ class BookRepository implements CrudInterface
                             ->orderBy('final_price')
                             ->paginate($paginateValue);
                     } else {
-                        $books = Book::FeaturedBooks()
+                        $books = Book::Books()
                             ->where(function ($q) use ($filter1Key, $filter1Value) {
                                 foreach ($filter1Key as $index => $value) {
                                     $q->where($value, '=', $filter1Value[$index]);
@@ -131,7 +131,7 @@ class BookRepository implements CrudInterface
                     }
                     return $books;
                 } else {
-                    $books = Book::FeaturedBooks()
+                    $books = Book::Books()
                         ->orderBy('final_price')
                         ->paginate($paginateValue);
 
@@ -152,7 +152,7 @@ class BookRepository implements CrudInterface
                             ->orderByDesc('final_price')
                             ->paginate($paginateValue);
                     } else {
-                        $books = Book::FeaturedBooks()
+                        $books = Book::Books()
                             ->where(function ($q) use ($filter1Key, $filter1Value) {
                                 foreach ($filter1Key as $index => $value) {
                                     $q->where($value, '=', $filter1Value[$index]);
@@ -163,7 +163,7 @@ class BookRepository implements CrudInterface
                     }
                     return $books;
                 } else {
-                    $books = Book::FeaturedBooks()
+                    $books = Book::Books()
                         ->orderByDesc('final_price')
                         ->paginate($paginateValue);
 

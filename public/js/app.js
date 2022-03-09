@@ -5426,7 +5426,6 @@ function Header() {
       stateCartTotalQty = _useState6[0],
       setStateCartTotalQty = _useState6[1];
 
-  console.log('totalCartQty', totalCartQty.newTotalCartQty);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     getUserFullName();
   }, [user_id]);
@@ -5709,6 +5708,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cart_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cart.css */ "./resources/js/pages/cart/cart.css");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/index */ "./resources/js/actions/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -5735,8 +5736,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Cart() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useDispatch)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     cartList: []
@@ -5746,25 +5749,39 @@ function Cart() {
       setStateCart = _useState2[1];
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    quantity: 0
+    cartListUnavailable: []
   }),
       _useState4 = _slicedToArray(_useState3, 2),
-      stateQty = _useState4[0],
-      setStateQty = _useState4[1];
+      stateCartUnavailable = _useState4[0],
+      setStateCartUnavailable = _useState4[1];
 
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    cartTotal: 0
+    quantity: 0
   }),
       _useState6 = _slicedToArray(_useState5, 2),
-      stateCartTotal = _useState6[0],
-      setStateCartTotal = _useState6[1];
+      stateQty = _useState6[0],
+      setStateQty = _useState6[1];
 
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    cartTotalQty: 0
+    cartTotal: 0
   }),
       _useState8 = _slicedToArray(_useState7, 2),
-      stateCartTotalQty = _useState8[0],
-      setStateCartTotalQty = _useState8[1];
+      stateCartTotal = _useState8[0],
+      setStateCartTotal = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    cartTotalQty: 0
+  }),
+      _useState10 = _slicedToArray(_useState9, 2),
+      stateCartTotalQty = _useState10[0],
+      setStateCartTotalQty = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(undefined),
+      _useState12 = _slicedToArray(_useState11, 2),
+      isError = _useState12[0],
+      setIsError = _useState12[1];
+
+  var getLoginData = JSON.parse(localStorage.getItem("loginUserData"));
 
   var getCartData = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -5854,25 +5871,149 @@ function Cart() {
     };
   }();
 
-  function updateCartQtyIn($id, $quantity) {
-    setStateQty({
-      quantity: $quantity
-    });
-    axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/update-cart-increment', {
-      id: $id,
-      quantity: $quantity
-    }).then(getCartTotalQuantity());
+  function updateCartQtyIn(_x, _x2) {
+    return _updateCartQtyIn.apply(this, arguments);
   }
 
-  function updateCartQtyDe($id, $quantity) {
-    setStateQty({
-      quantity: $quantity
-    });
-    axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/update-cart-decrement', {
-      id: $id,
-      quantity: $quantity
-    }).then(getCartTotalQuantity());
+  function _updateCartQtyIn() {
+    _updateCartQtyIn = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4($id, $quantity) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              setStateQty({
+                quantity: $quantity
+              });
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/cart/update-cart-increment', {
+                id: $id,
+                quantity: $quantity
+              }).then(getCartTotalQuantity());
+
+            case 3:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }));
+    return _updateCartQtyIn.apply(this, arguments);
   }
+
+  function updateCartQtyDe(_x3, _x4) {
+    return _updateCartQtyDe.apply(this, arguments);
+  }
+
+  function _updateCartQtyDe() {
+    _updateCartQtyDe = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5($id, $quantity) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              setStateQty({
+                quantity: $quantity
+              });
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/cart/update-cart-decrement', {
+                id: $id,
+                quantity: $quantity
+              }).then(getCartTotalQuantity());
+
+            case 3:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+    return _updateCartQtyDe.apply(this, arguments);
+  }
+
+  function removeCartItem(_x5) {
+    return _removeCartItem.apply(this, arguments);
+  }
+
+  function _removeCartItem() {
+    _removeCartItem = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6($id) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost:8000/api/cart/remove', {
+                id: $id
+              }).then(getCartTotalQuantity(), getCartData());
+
+            case 2:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+    return _removeCartItem.apply(this, arguments);
+  }
+
+  function placeOrder() {
+    return _placeOrder.apply(this, arguments);
+  }
+
+  function _placeOrder() {
+    _placeOrder = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost:8000/api/orders', {
+                user_id: getLoginData.data.user_id,
+                order_amount: stateCartTotal.cartTotal
+              });
+
+            case 2:
+              res = _context7.sent;
+              checkStatusPlaceOrder(res.data);
+              removeCartItemUnavailable(res.data);
+
+            case 5:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }));
+    return _placeOrder.apply(this, arguments);
+  }
+
+  function checkStatusPlaceOrder($value) {
+    if ($value == []) {
+      setIsError(false);
+      setTimeout(function () {
+        setIsError(undefined);
+      }, 10000);
+      setTimeout(function () {
+        navigate('/');
+      }, 11000);
+    } else {
+      setStateCartUnavailable({
+        cartListUnavailable: $value
+      });
+      setIsError(true);
+      setTimeout(function () {
+        setIsError(undefined);
+      }, 5000);
+    }
+  }
+
+  function removeCartItemUnavailable($value) {
+    Object.keys($value).map(function (item) {
+      return removeCartItem($value[item].book_id);
+    });
+  } // Object.keys(stateCartUnavailable.cartListUnavailable).map((item) => {
+  //   console.log(stateCartUnavailable.cartListUnavailable[item].book_name)
+  // })
+
 
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     getCartData();
@@ -5894,12 +6035,30 @@ function Cart() {
       className: "mt-4 mb-5"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
       className: "row",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      children: [isError == false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        className: "alert alert-success",
+        role: "alert",
+        children: "Place order successfully."
+      }) : isError == true ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "alert alert-danger",
+        role: "alert",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
+          className: "alert-heading",
+          children: "Error"
+        }), Object.keys(stateCartUnavailable.cartListUnavailable).map(function (item, i) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("p", {
+            children: ["Book ", stateCartUnavailable.cartListUnavailable[item].book_name, ", Price ", stateCartUnavailable.cartListUnavailable[item].price, "$ is unavailable!"]
+          }, i);
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+          className: "mb-0",
+          children: "Please choose another book."
+        })]
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
         className: "col-md-8",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          "class": "table-responsive border border-dark border-1 rounded-3",
+          className: "table-responsive border border-dark border-1 rounded-3",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("table", {
-            "class": "table table-hover align-middle",
+            className: "table table-hover align-middle",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("thead", {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
@@ -5921,38 +6080,53 @@ function Cart() {
                 })]
               })
             }), Object.keys(stateCart.cartList).map(function (item, i) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("tbody", {
+              return stateCart.cartList[item].quantity == 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("tbody", {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("tbody", {
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                     colSpan: 3,
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                      className: "product-info",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                        className: "d-inline",
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-                          src: "http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg",
-                          className: "rounded-start",
-                          style: {
-                            width: "130px",
-                            height: "130px"
-                          },
-                          alt: "Image Error"
-                        })
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                        className: "d-inline",
-                        style: {
-                          marginLeft: "10px"
-                        },
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+                      to: "/books/".concat(stateCart.cartList[item].id),
+                      style: {
+                        textDecoration: 'none'
+                      },
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                        className: "product-info",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                           className: "d-inline",
-                          children: stateCart.cartList[item].name
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                          children: stateCart.cartList[item].attributes.author_name
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                            src: "http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg",
+                            className: "rounded-start",
+                            style: {
+                              width: "130px",
+                              height: "130px"
+                            },
+                            alt: "Image Error"
+                          })
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                          className: "d-inline",
+                          style: {
+                            marginLeft: "10px"
+                          },
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
+                            className: "d-inline",
+                            children: stateCart.cartList[item].name
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                            children: stateCart.cartList[item].attributes.author_name
+                          })]
                         })]
-                      })]
+                      })
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("td", {
-                    children: ["$", stateCart.cartList[item].price]
+                  }), stateCart.cartList[item].price != stateCart.cartList[item].attributes.old_price ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("td", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h5", {
+                      children: ["$", stateCart.cartList[item].price]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("p", {
+                      className: "text-decoration-line-through old-price",
+                      children: ["$", stateCart.cartList[item].attributes.old_price]
+                    })]
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h5", {
+                      children: ["$", stateCart.cartList[item].price]
+                    })
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                       className: "input-group",
@@ -5962,7 +6136,11 @@ function Cart() {
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                         className: "btn btn-qty",
                         onClick: function onClick() {
-                          updateCartQtyDe(stateCart.cartList[item].id, stateCart.cartList[item].quantity);
+                          if (stateCart.cartList[item].quantity == 0) {
+                            removeCartItem(stateCart.cartList[item].id);
+                          } else {
+                            updateCartQtyDe(stateCart.cartList[item].id, stateCart.cartList[item].quantity);
+                          }
                         },
                         children: "-"
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
@@ -5979,7 +6157,7 @@ function Cart() {
                       })]
                     })
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("td", {
-                    children: ["$", stateCart.cartList[item].price * stateCart.cartList[item].quantity]
+                    children: ["$", Math.round(stateCart.cartList[item].price * stateCart.cartList[item].quantity * 10) / 10]
                   })]
                 }, i)
               });
@@ -6004,10 +6182,30 @@ function Cart() {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h4", {
                   children: ["$", stateCartTotal.cartTotal]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                }), getLoginData != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                   type: "button",
                   className: "btn btn-place-order w-80",
+                  onClick: function onClick() {
+                    return placeOrder();
+                  },
                   children: "Place order"
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+                  to: "#",
+                  "data-bs-toggle": "modal",
+                  "data-bs-target": "#exampleModal",
+                  "data-bs-whatever": "@getbootstrap",
+                  className: "nav-link",
+                  style: {
+                    textDecoration: 'none'
+                  },
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                    type: "button",
+                    className: "btn btn-place-order w-80",
+                    onClick: function onClick() {
+                      return placeOrder();
+                    },
+                    children: "Place order"
+                  })
                 })]
               })
             })]
@@ -6075,6 +6273,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function BookDetail() {
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useParams)(),
       id = _useParams.id;
@@ -6088,75 +6287,85 @@ function BookDetail() {
       state = _useState2[0],
       setState = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isError = _useState6[0],
+      setIsError = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     reviewListing: [],
     reviewCondition: [],
     reviewTotal: 0,
     reviewAvg: 0
   }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      stateReview = _useState4[0],
-      setStateReview = _useState4[1];
-
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    sort: "newestToOldest"
-  }),
-      _useState6 = _slicedToArray(_useState5, 2),
-      stateSort = _useState6[0],
-      setStateSort = _useState6[1];
-
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    paginate: 5
-  }),
       _useState8 = _slicedToArray(_useState7, 2),
-      statePaginate = _useState8[0],
-      setStatePaginate = _useState8[1];
+      stateReview = _useState8[0],
+      setStateReview = _useState8[1];
 
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    filter: null
+    sort: "newestToOldest"
   }),
       _useState10 = _slicedToArray(_useState9, 2),
-      stateFilter = _useState10[0],
-      setStateFilter = _useState10[1];
+      stateSort = _useState10[0],
+      setStateSort = _useState10[1];
 
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    quantity: 1
+    paginate: 5
   }),
       _useState12 = _slicedToArray(_useState11, 2),
-      stateQty = _useState12[0],
-      setStateQty = _useState12[1];
+      statePaginate = _useState12[0],
+      setStatePaginate = _useState12[1];
 
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    filter: null
+  }),
+      _useState14 = _slicedToArray(_useState13, 2),
+      stateFilter = _useState14[0],
+      setStateFilter = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    quantity: 1
+  }),
+      _useState16 = _slicedToArray(_useState15, 2),
+      stateQty = _useState16[0],
+      setStateQty = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     from: 1,
     to: 1,
     activePage: 1,
     itemsCountPerPage: 0,
     totalItemsCount: 0
   }),
-      _useState14 = _slicedToArray(_useState13, 2),
-      statePage = _useState14[0],
-      setStatePage = _useState14[1];
-
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    cart: {}
-  }),
-      _useState16 = _slicedToArray(_useState15, 2),
-      stateCart = _useState16[0],
-      setStateCart = _useState16[1];
-
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    status: undefined
-  }),
       _useState18 = _slicedToArray(_useState17, 2),
-      stateStatus = _useState18[0],
-      setStateStatus = _useState18[1];
+      statePage = _useState18[0],
+      setStatePage = _useState18[1];
 
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
-    total: 0
+    cart: {}
   }),
       _useState20 = _slicedToArray(_useState19, 2),
-      stateCartQty = _useState20[0],
-      setStateCartQty = _useState20[1];
+      stateCart = _useState20[0],
+      setStateCart = _useState20[1];
+
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    status: undefined
+  }),
+      _useState22 = _slicedToArray(_useState21, 2),
+      stateStatus = _useState22[0],
+      setStateStatus = _useState22[1];
+
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    total: 0
+  }),
+      _useState24 = _slicedToArray(_useState23, 2),
+      stateCartQty = _useState24[0],
+      setStateCartQty = _useState24[1];
 
   var handleChangeSort = function handleChangeSort(e) {
     setStateSort(function (prevStateSort) {
@@ -6182,26 +6391,35 @@ function BookDetail() {
   }
 
   function handleAddToCart() {
-    if (stateCart.cart == null) {
-      Object.keys(state.book).map(function (item) {
-        return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost:8000/api/cart', {
-          id: id,
-          quantity: stateQty.quantity,
-          book_title: state.book[item].book_title,
-          book_price: state.book[item].book_price,
-          book_cover_photo: state.book[item].book_cover_photo,
-          discount_price: state.book[item].discount_price,
-          author_name: state.book[item].author_name
-        }).then(getCartTotalQuantity());
-      });
-    } else {
-      handleUpdateCartQty();
+    try {
+      if (stateCart.cart == null) {
+        Object.keys(state.book).map(function (item) {
+          return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost:8000/api/cart', {
+            id: id,
+            quantity: stateQty.quantity,
+            book_title: state.book[item].book_title,
+            book_price: state.book[item].book_price,
+            book_cover_photo: state.book[item].book_cover_photo,
+            discount_price: state.book[item].discount_price,
+            author_name: state.book[item].author_name
+          }).then(getCartTotalQuantity());
+        });
+      } else {
+        handleUpdateCartQty();
+      }
+
+      setIsError(false);
+      setTimeout(function () {
+        setIsError(true);
+      }, 3000);
+    } catch (error) {
+      setIsError(true);
     }
   }
 
   function handleUpdateCartQty() {
     if (stateCart.cart.quantity + stateQty.quantity < 9) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/update-cart', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/cart/update-cart', {
         id: id,
         quantity: stateCart.cart.quantity + stateQty.quantity
       }).then(getCartTotalQuantity());
@@ -6223,16 +6441,17 @@ function BookDetail() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              setIsLoading(true);
+              _context.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost:8000/api/books/".concat(id));
 
-            case 2:
+            case 3:
               res = _context.sent;
               setState({
                 book: res.data.data
               });
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -6289,32 +6508,33 @@ function BookDetail() {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.next = 2;
+              setIsLoading(true);
+              _context3.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost:8000/api/reviews/listing/".concat(id));
 
-            case 2:
+            case 3:
               resReviewListing = _context3.sent;
-              _context3.next = 5;
+              _context3.next = 6;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost:8000/api/reviews/total/".concat(id));
 
-            case 5:
+            case 6:
               resReviewTotal = _context3.sent;
-              _context3.next = 8;
+              _context3.next = 9;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost:8000/api/reviews/avg/".concat(id));
 
-            case 8:
+            case 9:
               resReviewAvg = _context3.sent;
               reviewAvgStar = Math.round(resReviewAvg.data * 10) / 10;
 
               if (!(stateFilter.filter != null)) {
-                _context3.next = 22;
+                _context3.next = 23;
                 break;
               }
 
-              _context3.next = 13;
+              _context3.next = 14;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost:8000/api/reviews/condition/".concat(id, "?filter[rating_star]=").concat(stateFilter.filter, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 13:
+            case 14:
               resReviewCondition = _context3.sent;
               newArray = resReviewListing.data.slice();
               setStateReview({
@@ -6350,14 +6570,14 @@ function BookDetail() {
                 reviewListing: newArray,
                 reviewCondition: resReviewCondition.data.data
               });
-              _context3.next = 31;
+              _context3.next = 32;
               break;
 
-            case 22:
-              _context3.next = 24;
+            case 23:
+              _context3.next = 25;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost:8000/api/reviews/condition/".concat(id, "?sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 24:
+            case 25:
               _resReviewCondition = _context3.sent;
               _newArray = resReviewListing.data.slice();
               setStateReview({
@@ -6396,7 +6616,10 @@ function BookDetail() {
                 reviewCondition: _resReviewCondition.data.data
               });
 
-            case 31:
+            case 32:
+              setIsLoading(false);
+
+            case 33:
             case "end":
               return _context3.stop();
           }
@@ -6445,300 +6668,314 @@ function BookDetail() {
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
     className: "container",
-    children: [Object.keys(state.book).map(function (item, i) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-        className: "row",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          className: "col-md-8",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "row border-book-detail rounded-3 border-1",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "col-md-4 p-0",
-              children: [state.book[item].book_cover_photo != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-                src: "http://localhost:8000/bookcover/" + state.book[item].book_cover_photo + ".jpg",
-                className: "card-img-top",
-                alt: "abc"
-              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-                src: "http://localhost:8000/bookcover/bookNull.jpg",
-                className: "card-img-top",
-                alt: "abc"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
-                className: "fl-right d-inline",
-                children: ["By ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h6", {
-                  className: "d-inline",
-                  children: state.book[item].author_name
+    children: isLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "text-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "spinner-border text-info",
+        role: "status",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "visually-hidden",
+          children: "Loading..."
+        })
+      })
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+      children: [Object.keys(state.book).map(function (item, i) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: "col-md-8",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "row border-book-detail rounded-3 border-1",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "col-md-4 p-0",
+                children: [state.book[item].book_cover_photo != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+                  src: "http://localhost:8000/bookcover/" + state.book[item].book_cover_photo + ".jpg",
+                  className: "card-img-top",
+                  alt: "abc"
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+                  src: "http://localhost:8000/bookcover/bookNull.jpg",
+                  className: "card-img-top",
+                  alt: "abc"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+                  className: "fl-right d-inline",
+                  children: ["By ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h6", {
+                    className: "d-inline",
+                    children: state.book[item].author_name
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                className: "col-md-8",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  className: "mt-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
+                    children: state.book[item].book_title
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+                    children: state.book[item].book_summary
+                  })]
+                })
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: "col-md-4",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "border-book-detail rounded-3 border-1",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                className: "bg-quantity px-5 text-white border-book-detail rounded-3 border-1",
+                children: state.book[item].discount_price != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                    className: "d-inline text-decoration-line-through fw-light fs-5",
+                    style: {
+                      marginRight: "10px"
+                    },
+                    children: ["$", state.book[item].book_price]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                    className: "d-inline fw-bold fs-4",
+                    children: ["$", state.book[item].discount_price]
+                  })]
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  className: "d-inline fw-bold fs-4",
+                  children: ["$", state.book[item].book_price]
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "mt-5 px-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
+                  children: "Quantity"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  className: "bm-flex bg-quantity text-white height-quantity rounded-3 border-1",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                    type: "button",
+                    className: "btn btn-info text-white",
+                    onClick: function onClick() {
+                      if (stateQty.quantity > 1) {
+                        setStateQty({
+                          quantity: stateQty.quantity - 1
+                        });
+                      }
+                    },
+                    children: "-"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                    children: stateQty.quantity
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                    type: "button",
+                    className: "btn btn-info text-white",
+                    onClick: function onClick() {
+                      if (stateQty.quantity < 8) {
+                        setStateQty({
+                          quantity: stateQty.quantity + 1
+                        });
+                      }
+                    },
+                    children: "+"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                  type: "button",
+                  className: "btn text-white bg-quantity mt-4 w-100 mb-5",
+                  onClick: handleAddToCart,
+                  children: "Add to cart"
+                }), isError == false && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "alert alert-success text-center",
+                  role: "alert",
+                  children: "Add to cart successfully!"
                 })]
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              className: "col-md-8",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                className: "mt-3",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
-                  children: state.book[item].book_title
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-                  children: state.book[item].book_summary
+            })
+          })]
+        });
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "row mt-5",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "col-md-8 border-book-detail rounded-3 border-1",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            className: "py-4 px-3",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
+              className: "fs-4 fw-bold d-inline",
+              children: "Customer Reviews "
+            }), stateFilter.filter != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "d-inline fw-light",
+              children: ["(Filltered by ", stateFilter.filter, " stars)"]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "d-flex",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                  className: "fs-3 fw-bold",
+                  children: stateReview.reviewAvg
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  className: "star-mr text-decoration-underline fw-bold",
+                  children: ["(", stateReview.reviewTotal, ")"]
                 })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                  className: "fs-3 fw-bold",
+                  children: "Star"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  children: [Object.keys(stateReview.reviewListing).map(function (item, i) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                      className: "px-1 text-decoration-underline",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilter({
+                          filter: stateReview.reviewListing[item].star
+                        });
+                      },
+                      children: [stateReview.reviewListing[item].star, " star(", stateReview.reviewListing[item].count, ")"]
+                    });
+                  }), stateFilter.filter != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                    className: "px-1 text-decoration-underline",
+                    role: "button",
+                    onClick: function onClick() {
+                      return setStateFilter({
+                        filter: null
+                      });
+                    },
+                    children: ["all star(", stateReview.reviewTotal, ")"]
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {})]
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "d-flex justify-content-between",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+                className: "mt-3",
+                style: {
+                  marginRight: "20px"
+                },
+                children: ["Showing ", statePage.from, "-", statePage.to, " of ", stateReview.reviewTotal, " reviews"]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "d-flex mt-3",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
+                  value: stateSort.sort,
+                  onChange: handleChangeSort,
+                  style: {
+                    marginRight: "10px"
+                  },
+                  className: "dropdown btn bg-quantity text-white",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    value: "newestToOldest",
+                    className: "bg-quantity text-white",
+                    children: "Sort by date: newest to oldest"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    value: "oldestToNewest",
+                    className: "bg-quantity text-white",
+                    children: "Sort by date: oldest to newest"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
+                  value: statePaginate.paginate,
+                  onChange: handleChangePaginate,
+                  style: {
+                    marginRight: "10px"
+                  },
+                  className: "dropdown btn bg-quantity text-white",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    value: "5",
+                    className: "bg-quantity text-white",
+                    children: "Show 5"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    value: "15",
+                    className: "bg-quantity text-white",
+                    children: "Show 15"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    value: "20",
+                    className: "bg-quantity text-white",
+                    children: "Show 20"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    value: "25",
+                    className: "bg-quantity text-white",
+                    children: "Show 25"
+                  })]
+                })]
+              })]
+            }), Object.keys(stateReview.reviewCondition).map(function (item, i) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "col-md-12 mt-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
+                  className: "fw-bold fs-5 d-inline",
+                  children: stateReview.reviewCondition[item].review_title
+                }), " |", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                  className: "d-inline",
+                  children: [" ", stateReview.reviewCondition[item].rating_start, " stars"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+                  children: stateReview.reviewCondition[item].review_details
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+                  children: stateReview.reviewCondition[item].review_date
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("hr", {
+                  className: "mt-5"
+                })]
+              });
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              className: "d-flex justify-content-center",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_js_pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                activePage: statePage.activePage,
+                itemsCountPerPage: statePage.itemsCountPerPage,
+                totalItemsCount: statePage.totalItemsCount,
+                pageRangeDisplayed: 3,
+                prevPageText: "Previous",
+                nextPageText: "Next",
+                onChange: handlePageChange,
+                itemClass: "page-item",
+                linkClass: "page-link"
               })
             })]
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
           className: "col-md-4",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "border-book-detail rounded-3 border-1",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              className: "bg-quantity px-5 text-white border-book-detail rounded-3 border-1",
-              children: state.book[item].discount_price != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                  className: "d-inline text-decoration-line-through fw-light fs-5",
-                  style: {
-                    marginRight: "10px"
-                  },
-                  children: ["$", state.book[item].book_price]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                  className: "d-inline fw-bold fs-4",
-                  children: ["$", state.book[item].discount_price]
+            className: "border-book-detail rounded-3 border-1 p-2",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
+              className: "fs-4 fw-bold",
+              children: "Write a review"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
+              className: "form-review",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "form-group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
+                  "for": "exampleFormControlInput1",
+                  children: "Add Title"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+                  type: "text",
+                  className: "form-control",
+                  id: "exampleFormControlInput1",
+                  placeholder: "title"
                 })]
-              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                className: "d-inline fw-bold fs-4",
-                children: ["$", state.book[item].book_price]
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "mt-5 px-5",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
-                children: "Quantity"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                className: "bm-flex bg-quantity text-white height-quantity rounded-3 border-1",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-                  type: "button",
-                  className: "btn btn-info text-white",
-                  onClick: function onClick() {
-                    if (stateQty.quantity > 1) {
-                      setStateQty({
-                        quantity: stateQty.quantity - 1
-                      });
-                    }
-                  },
-                  children: "-"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-                  children: stateQty.quantity
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-                  type: "button",
-                  className: "btn btn-info text-white",
-                  onClick: function onClick() {
-                    if (stateQty.quantity < 8) {
-                      setStateQty({
-                        quantity: stateQty.quantity + 1
-                      });
-                    }
-                  },
-                  children: "+"
+                className: "form-group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
+                  "for": "exampleFormControlTextarea1",
+                  children: "Detail"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("textarea", {
+                  className: "form-control",
+                  id: "exampleFormControlTextarea1",
+                  rows: "3"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "form-group",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
+                  "for": "exampleFormControlSelect1",
+                  children: "Example select"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
+                  className: "form-control",
+                  id: "exampleFormControlSelect1",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    children: "1 star"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    children: "2 star"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    children: "3 star"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    children: "4 star"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    children: "5 star"
+                  })]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-                type: "button",
-                className: "btn text-white bg-quantity mt-4 w-100 mb-5",
-                onClick: handleAddToCart,
-                children: "Add to cart"
+                className: "btn submit-review",
+                children: "123"
               })]
             })]
           })
         })]
-      });
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-      className: "row mt-5",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-        className: "col-md-8 border-book-detail rounded-3 border-1",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          className: "py-4 px-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
-            className: "fs-4 fw-bold d-inline",
-            children: "Customer Reviews "
-          }), stateFilter.filter != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "d-inline fw-light",
-            children: ["(Filltered by ", stateFilter.filter, " stars)"]
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "d-flex",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-                className: "fs-3 fw-bold",
-                children: stateReview.reviewAvg
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                className: "star-mr text-decoration-underline fw-bold",
-                children: ["(", stateReview.reviewTotal, ")"]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-                className: "fs-3 fw-bold",
-                children: "Star"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                children: [Object.keys(stateReview.reviewListing).map(function (item, i) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
-                    className: "px-1 text-decoration-underline",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilter({
-                        filter: stateReview.reviewListing[item].star
-                      });
-                    },
-                    children: [stateReview.reviewListing[item].star, " star(", stateReview.reviewListing[item].count, ")"]
-                  });
-                }), stateFilter.filter != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
-                  className: "px-1 text-decoration-underline",
-                  role: "button",
-                  onClick: function onClick() {
-                    return setStateFilter({
-                      filter: null
-                    });
-                  },
-                  children: ["all star(", stateReview.reviewTotal, ")"]
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {})]
-              })]
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "d-flex justify-content-between",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
-              className: "mt-3",
-              style: {
-                marginRight: "20px"
-              },
-              children: ["Showing ", statePage.from, "-", statePage.to, " of ", stateReview.reviewTotal, " reviews"]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "d-flex mt-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
-                value: stateSort.sort,
-                onChange: handleChangeSort,
-                style: {
-                  marginRight: "10px"
-                },
-                className: "dropdown btn bg-quantity text-white",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  value: "newestToOldest",
-                  className: "bg-quantity text-white",
-                  children: "Sort by date: newest to oldest"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  value: "oldestToNewest",
-                  className: "bg-quantity text-white",
-                  children: "Sort by date: oldest to newest"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
-                value: statePaginate.paginate,
-                onChange: handleChangePaginate,
-                style: {
-                  marginRight: "10px"
-                },
-                className: "dropdown btn bg-quantity text-white",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  value: "5",
-                  className: "bg-quantity text-white",
-                  children: "Show 5"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  value: "15",
-                  className: "bg-quantity text-white",
-                  children: "Show 15"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  value: "20",
-                  className: "bg-quantity text-white",
-                  children: "Show 20"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  value: "25",
-                  className: "bg-quantity text-white",
-                  children: "Show 25"
-                })]
-              })]
-            })]
-          }), Object.keys(stateReview.reviewCondition).map(function (item, i) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "col-md-12 mt-5",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
-                className: "fw-bold fs-5 d-inline",
-                children: stateReview.reviewCondition[item].review_title
-              }), " |", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
-                className: "d-inline",
-                children: [" ", stateReview.reviewCondition[item].rating_start, " stars"]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-                children: stateReview.reviewCondition[item].review_details
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-                children: stateReview.reviewCondition[item].review_date
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("hr", {
-                className: "mt-5"
-              })]
-            });
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-            className: "d-flex justify-content-center",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_js_pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
-              activePage: statePage.activePage,
-              itemsCountPerPage: statePage.itemsCountPerPage,
-              totalItemsCount: statePage.totalItemsCount,
-              pageRangeDisplayed: 3 //firstPageText="First"
-              ,
-              prevPageText: "Previous",
-              nextPageText: "Next" //lastPageText="Last"
-              ,
-              onChange: handlePageChange,
-              itemClass: "page-item",
-              linkClass: "page-link"
-            })
-          })]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-        className: "col-md-4",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          className: "border-book-detail rounded-3 border-1 p-2",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
-            className: "fs-4 fw-bold",
-            children: "Write a review"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
-            className: "form-review",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
-                "for": "exampleFormControlInput1",
-                children: "Add Title"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-                type: "text",
-                className: "form-control",
-                id: "exampleFormControlInput1",
-                placeholder: "title"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
-                "for": "exampleFormControlTextarea1",
-                children: "Detail"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("textarea", {
-                className: "form-control",
-                id: "exampleFormControlTextarea1",
-                rows: "3"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
-                "for": "exampleFormControlSelect1",
-                children: "Example select"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
-                className: "form-control",
-                id: "exampleFormControlSelect1",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  children: "1 star"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  children: "2 star"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  children: "3 star"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  children: "4 star"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                  children: "5 star"
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-              className: "btn submit-review",
-              children: "123"
-            })]
-          })]
-        })
       })]
-    })]
+    })
   });
 }
 
@@ -6925,7 +7162,15 @@ function Home() {
           })]
         })]
       }), isLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-        children: "Loading ..."
+        className: "text-center",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "spinner-border text-info",
+          role: "status",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            className: "visually-hidden",
+            children: "Loading..."
+          })
+        })
       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         id: "carouselExampleControls",
         className: "carousel slide border border-1",
@@ -7173,7 +7418,15 @@ function Home() {
             })
           })]
         }), isLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          children: "Loading ..."
+          className: "text-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "spinner-border text-info",
+            role: "status",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+              className: "visually-hidden",
+              children: "Loading..."
+            })
+          })
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "tab-content border border-1",
           id: "pills-tImage Errorontent",
@@ -7523,6 +7776,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Shop() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     book: []
@@ -7566,24 +7820,34 @@ function Shop() {
       stateFilterStar = _useState12[0],
       setStateFilterStar = _useState12[1];
 
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState14 = _slicedToArray(_useState13, 2),
+      isLoading = _useState14[0],
+      setIsLoading = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      isError = _useState16[0],
+      setIsError = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     from: 1,
     to: 1,
     activePage: 1,
     itemsCountPerPage: 0,
     totalItemsCount: 0
   }),
-      _useState14 = _slicedToArray(_useState13, 2),
-      statePage = _useState14[0],
-      setStatePage = _useState14[1];
+      _useState18 = _slicedToArray(_useState17, 2),
+      statePage = _useState18[0],
+      setStatePage = _useState18[1];
 
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     categoryName: [],
     authorName: []
   }),
-      _useState16 = _slicedToArray(_useState15, 2),
-      stateAccordion = _useState16[0],
-      setStateAccordion = _useState16[1];
+      _useState20 = _slicedToArray(_useState19, 2),
+      stateAccordion = _useState20[0],
+      setStateAccordion = _useState20[1];
 
   var handleChangeSort = function handleChangeSort(e) {
     setStateSort(function (prevStateSort) {
@@ -7615,27 +7879,40 @@ function Shop() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              setIsLoading(true);
+              setIsError(false);
+              _context.prev = 2;
+              _context.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get('http://localhost:8000/api/categories/name-shoppage');
 
-            case 2:
+            case 5:
               resCategoryName = _context.sent;
-              _context.next = 5;
+              _context.next = 8;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get('http://localhost:8000/api/authors/name-shoppage');
 
-            case 5:
+            case 8:
               resAuthorName = _context.sent;
               setStateAccordion({
                 categoryName: resCategoryName.data.data,
                 authorName: resAuthorName.data.data
               });
+              _context.next = 15;
+              break;
 
-            case 7:
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](2);
+              setIsError(true);
+
+            case 15:
+              setIsLoading(false);
+
+            case 16:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[2, 12]]);
     }));
 
     return function getAccordionData() {
@@ -7658,15 +7935,19 @@ function Shop() {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
+              setIsLoading(true);
+              setIsError(false);
+              _context2.prev = 2;
+
               if (!(stateFilterCate.filterCate != null && stateFilterAuthor.filterAuthor != null && stateFilterStar.filterStar != null)) {
-                _context2.next = 8;
+                _context2.next = 11;
                 break;
               }
 
-              _context2.next = 3;
+              _context2.next = 6;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?filter[category_name]=".concat(stateFilterCate.filterCate, "&filter[author_name]=").concat(stateFilterAuthor.filterAuthor, "&filter[avg_star]=").concat(stateFilterStar.filterStar, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 3:
+            case 6:
               resBookCondition = _context2.sent;
               setStateBook({
                 book: resBookCondition.data.data
@@ -7678,19 +7959,19 @@ function Shop() {
                 itemsCountPerPage: resBookCondition.data.per_page,
                 totalItemsCount: resBookCondition.data.total
               });
-              _context2.next = 62;
+              _context2.next = 65;
               break;
 
-            case 8:
+            case 11:
               if (!(stateFilterCate.filterCate != null && stateFilterAuthor.filterAuthor != null && stateFilterStar.filterStar == null)) {
-                _context2.next = 16;
+                _context2.next = 19;
                 break;
               }
 
-              _context2.next = 11;
+              _context2.next = 14;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?filter[category_name]=".concat(stateFilterCate.filterCate, "&filter[author_name]=").concat(stateFilterAuthor.filterAuthor, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 11:
+            case 14:
               _resBookCondition = _context2.sent;
               setStateBook({
                 book: _resBookCondition.data.data
@@ -7702,19 +7983,19 @@ function Shop() {
                 itemsCountPerPage: _resBookCondition.data.per_page,
                 totalItemsCount: _resBookCondition.data.total
               });
-              _context2.next = 62;
+              _context2.next = 65;
               break;
 
-            case 16:
+            case 19:
               if (!(stateFilterCate.filterCate != null && stateFilterAuthor.filterAuthor == null && stateFilterStar.filterStar != null)) {
-                _context2.next = 24;
+                _context2.next = 27;
                 break;
               }
 
-              _context2.next = 19;
+              _context2.next = 22;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?filter[category_name]=".concat(stateFilterCate.filterCate, "&filter[avg_star]=").concat(stateFilterStar.filterStar, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 19:
+            case 22:
               _resBookCondition2 = _context2.sent;
               setStateBook({
                 book: _resBookCondition2.data.data
@@ -7726,19 +8007,19 @@ function Shop() {
                 itemsCountPerPage: _resBookCondition2.data.per_page,
                 totalItemsCount: _resBookCondition2.data.total
               });
-              _context2.next = 62;
+              _context2.next = 65;
               break;
 
-            case 24:
+            case 27:
               if (!(stateFilterCate.filterCate == null && stateFilterAuthor.filterAuthor != null && stateFilterStar.filterStar != null)) {
-                _context2.next = 32;
+                _context2.next = 35;
                 break;
               }
 
-              _context2.next = 27;
+              _context2.next = 30;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?filter[author_name]=".concat(stateFilterAuthor.filterAuthor, "&filter[avg_star]=").concat(stateFilterStar.filterStar, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 27:
+            case 30:
               _resBookCondition3 = _context2.sent;
               setStateBook({
                 book: _resBookCondition3.data.data
@@ -7750,19 +8031,19 @@ function Shop() {
                 itemsCountPerPage: _resBookCondition3.data.per_page,
                 totalItemsCount: _resBookCondition3.data.total
               });
-              _context2.next = 62;
+              _context2.next = 65;
               break;
 
-            case 32:
+            case 35:
               if (!(stateFilterCate.filterCate != null && stateFilterAuthor.filterAuthor == null && stateFilterStar.filterStar == null)) {
-                _context2.next = 40;
+                _context2.next = 43;
                 break;
               }
 
-              _context2.next = 35;
+              _context2.next = 38;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?filter[category_name]=".concat(stateFilterCate.filterCate, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 35:
+            case 38:
               _resBookCondition4 = _context2.sent;
               setStateBook({
                 book: _resBookCondition4.data.data
@@ -7774,19 +8055,19 @@ function Shop() {
                 itemsCountPerPage: _resBookCondition4.data.per_page,
                 totalItemsCount: _resBookCondition4.data.total
               });
-              _context2.next = 62;
+              _context2.next = 65;
               break;
 
-            case 40:
+            case 43:
               if (!(stateFilterCate.filterCate == null && stateFilterAuthor.filterAuthor != null && stateFilterStar.filterStar == null)) {
-                _context2.next = 48;
+                _context2.next = 51;
                 break;
               }
 
-              _context2.next = 43;
+              _context2.next = 46;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?filter[author_name]=".concat(stateFilterAuthor.filterAuthor, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 43:
+            case 46:
               _resBookCondition5 = _context2.sent;
               setStateBook({
                 book: _resBookCondition5.data.data
@@ -7798,19 +8079,19 @@ function Shop() {
                 itemsCountPerPage: _resBookCondition5.data.per_page,
                 totalItemsCount: _resBookCondition5.data.total
               });
-              _context2.next = 62;
+              _context2.next = 65;
               break;
 
-            case 48:
+            case 51:
               if (!(stateFilterCate.filterCate == null && stateFilterAuthor.filterAuthor == null && stateFilterStar.filterStar != null)) {
-                _context2.next = 56;
+                _context2.next = 59;
                 break;
               }
 
-              _context2.next = 51;
+              _context2.next = 54;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?filter[avg_star]=".concat(stateFilterStar.filterStar, "&sort[type]=").concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 51:
+            case 54:
               _resBookCondition6 = _context2.sent;
               setStateBook({
                 book: _resBookCondition6.data.data
@@ -7822,19 +8103,19 @@ function Shop() {
                 itemsCountPerPage: _resBookCondition6.data.per_page,
                 totalItemsCount: _resBookCondition6.data.total
               });
-              _context2.next = 62;
+              _context2.next = 65;
               break;
 
-            case 56:
+            case 59:
               if (!(stateFilterCate.filterCate == null && stateFilterAuthor.filterAuthor == null && stateFilterStar.filterStar == null)) {
-                _context2.next = 62;
+                _context2.next = 65;
                 break;
               }
 
-              _context2.next = 59;
+              _context2.next = 62;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/api/books/condition?sort[type]=".concat(stateSort.sort, "&paginate=").concat(statePaginate.paginate, "&page=").concat(statePage.activePage));
 
-            case 59:
+            case 62:
               _resBookCondition7 = _context2.sent;
               setStateBook({
                 book: _resBookCondition7.data.data
@@ -7847,12 +8128,24 @@ function Shop() {
                 totalItemsCount: _resBookCondition7.data.total
               });
 
-            case 62:
+            case 65:
+              _context2.next = 70;
+              break;
+
+            case 67:
+              _context2.prev = 67;
+              _context2.t0 = _context2["catch"](2);
+              setIsError(true);
+
+            case 70:
+              setIsLoading(false);
+
+            case 71:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2);
+      }, _callee2, null, [[2, 67]]);
     }));
 
     return function getBookData() {
@@ -7860,331 +8153,343 @@ function Shop() {
     };
   }();
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
     className: "container",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
-      className: "fs-4 fw-bold d-inline",
-      children: "Books "
-    }), stateFilterCate.filterCate != null || stateFilterAuthor.filterAuthor != null || stateFilterStar.filterStar != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-      className: "d-inline fw-light",
-      children: ["(Filltered by Category: ", stateFilterCate.filterCate, ", Author: ", stateFilterAuthor.filterAuthor, ", Star: ", stateFilterStar.filterStar, ")"]
-    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {
-      className: "mt-4 mb-5"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-      className: "row",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-        className: "col-md-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
-          children: "Filter By"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "accordion mt-4",
-          id: "accordionExample",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-            className: "accordion-item rounded-3 border border-1 border-dark",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
-              className: "accordion-header",
-              id: "headingOne",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-                className: "accordion-button",
-                type: "button",
-                "data-bs-toggle": "collapse",
-                "data-bs-target": "#collapseOne",
-                "aria-expanded": "true",
-                "aria-controls": "collapseOne",
-                children: "Category"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-              id: "collapseOne",
-              className: "accordion-collapse collapse show",
-              "aria-labelledby": "headingOne",
-              "data-bs-parent": "#accordionExample",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                className: "accordion-body",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("ul", {
-                  className: "list-group",
-                  children: [stateAccordion.categoryName.map(function (item, i) {
-                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+    children: isLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "text-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "spinner-border text-info",
+        role: "status",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          className: "visually-hidden",
+          children: "Loading..."
+        })
+      })
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+        className: "fs-4 fw-bold d-inline",
+        children: "Books "
+      }), stateFilterCate.filterCate != null || stateFilterAuthor.filterAuthor != null || stateFilterStar.filterStar != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "d-inline fw-light",
+        children: ["(Filltered by Category: ", stateFilterCate.filterCate, ", Author: ", stateFilterAuthor.filterAuthor, ", Star: ", stateFilterStar.filterStar, ")"]
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {
+        className: "mt-4 mb-5"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "row",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "col-md-2",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
+            children: "Filter By"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "accordion mt-4",
+            id: "accordionExample",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "accordion-item rounded-3 border border-1 border-dark",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+                className: "accordion-header",
+                id: "headingOne",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "accordion-button",
+                  type: "button",
+                  "data-bs-toggle": "collapse",
+                  "data-bs-target": "#collapseOne",
+                  "aria-expanded": "true",
+                  "aria-controls": "collapseOne",
+                  children: "Category"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                id: "collapseOne",
+                className: "accordion-collapse collapse show",
+                "aria-labelledby": "headingOne",
+                "data-bs-parent": "#accordionExample",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "accordion-body",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("ul", {
+                    className: "list-group",
+                    children: [stateAccordion.categoryName.map(function (item, i) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                        className: "list-group-item list-group-item-action",
+                        role: "button",
+                        onClick: function onClick() {
+                          return setStateFilterCate({
+                            filterCate: item.category_name
+                          });
+                        },
+                        children: item.category_name
+                      });
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
                       className: "list-group-item list-group-item-action",
                       role: "button",
                       onClick: function onClick() {
                         return setStateFilterCate({
-                          filterCate: item.category_name
+                          filterCate: null
                         });
                       },
-                      children: item.category_name
+                      children: "All Category"
+                    })]
+                  })
+                })
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "accordion-item rounded-3 border border-1 border-dark mt-3",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+                className: "accordion-header",
+                id: "headingTwo",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "accordion-button collapsed",
+                  type: "button",
+                  "data-bs-toggle": "collapse",
+                  "data-bs-target": "#collapseTwo",
+                  "aria-expanded": "false",
+                  "aria-controls": "collapseTwo",
+                  children: "Author"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                id: "collapseTwo",
+                className: "accordion-collapse collapse",
+                "aria-labelledby": "headingTwo",
+                "data-bs-parent": "#accordionExample",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                  className: "accordion-body",
+                  children: [stateAccordion.authorName.map(function (item, i) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                      className: "list-group-item list-group-item-action",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilterAuthor({
+                          filterAuthor: item.author_name
+                        });
+                      },
+                      children: item.author_name
                     });
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                    className: "list-group-item list-group-item-action",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilterCate({
-                        filterCate: null
-                      });
-                    },
-                    children: "All Category"
-                  })]
-                })
-              })
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-            className: "accordion-item rounded-3 border border-1 border-dark mt-3",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
-              className: "accordion-header",
-              id: "headingTwo",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-                className: "accordion-button collapsed",
-                type: "button",
-                "data-bs-toggle": "collapse",
-                "data-bs-target": "#collapseTwo",
-                "aria-expanded": "false",
-                "aria-controls": "collapseTwo",
-                children: "Author"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-              id: "collapseTwo",
-              className: "accordion-collapse collapse",
-              "aria-labelledby": "headingTwo",
-              "data-bs-parent": "#accordionExample",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                className: "accordion-body",
-                children: [stateAccordion.authorName.map(function (item, i) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
                     className: "list-group-item list-group-item-action",
                     role: "button",
                     onClick: function onClick() {
                       return setStateFilterAuthor({
-                        filterAuthor: item.author_name
+                        filterAuthor: null
                       });
                     },
-                    children: item.author_name
-                  });
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                  className: "list-group-item list-group-item-action",
-                  role: "button",
-                  onClick: function onClick() {
-                    return setStateFilterAuthor({
-                      filterAuthor: null
-                    });
-                  },
-                  children: "All Author"
-                })]
-              })
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-            className: "accordion-item rounded-3 border border-1 border-dark mt-3",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
-              className: "accordion-header",
-              id: "headingThree",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-                className: "accordion-button collapsed",
-                type: "button",
-                "data-bs-toggle": "collapse",
-                "data-bs-target": "#collapseThree",
-                "aria-expanded": "false",
-                "aria-controls": "collapseThree",
-                children: "Rating Review"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-              id: "collapseThree",
-              className: "accordion-collapse collapse",
-              "aria-labelledby": "headingThree",
-              "data-bs-parent": "#accordionExample",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                className: "accordion-body",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("ul", {
-                  className: "list-group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                    className: "list-group-item list-group-item-action",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilterStar({
-                        filterStar: 1
-                      });
-                    },
-                    children: "1 Star"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                    className: "list-group-item list-group-item-action",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilterStar({
-                        filterStar: 2
-                      });
-                    },
-                    children: "2 Star"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                    className: "list-group-item list-group-item-action",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilterStar({
-                        filterStar: 3
-                      });
-                    },
-                    children: "3 Star"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                    className: "list-group-item list-group-item-action",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilterStar({
-                        filterStar: 4
-                      });
-                    },
-                    children: "4 Star"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                    className: "list-group-item list-group-item-action",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilterStar({
-                        filterStar: 5
-                      });
-                    },
-                    children: "5 Star"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
-                    className: "list-group-item list-group-item-action",
-                    role: "button",
-                    onClick: function onClick() {
-                      return setStateFilterStar({
-                        filterStar: null
-                      });
-                    },
-                    children: "All Star"
+                    children: "All Author"
                   })]
                 })
-              })
-            })]
-          })]
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-        className: "col-md-10",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "d-flex justify-content-between",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
-            style: {
-              marginRight: "20px"
-            },
-            children: ["Showing ", statePage.from, "-", statePage.to, " of ", statePage.totalItemsCount, " books"]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-            className: "d-flex",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
-              value: stateSort.sort,
-              onChange: handleChangeSort,
-              style: {
-                marginRight: "10px"
-              },
-              className: "dropdown btn bg-quantity text-white",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "onSale",
-                className: "bg-quantity text-white",
-                children: "Sort by on sale"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "popularity",
-                className: "bg-quantity text-white",
-                children: "Sort by popularity"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "priceAsc",
-                className: "bg-quantity text-white",
-                children: "Sort by price: low to high"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "priceDesc",
-                className: "bg-quantity text-white",
-                children: "Sort by price: high to low"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
-              value: statePaginate.paginate,
-              onChange: handleChangePaginate,
-              style: {
-                marginRight: "10px"
-              },
-              className: "dropdown btn bg-quantity text-white",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "5",
-                className: "bg-quantity text-white",
-                children: "Show 5"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "15",
-                className: "bg-quantity text-white",
-                children: "Show 15"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "20",
-                className: "bg-quantity text-white",
-                children: "Show 20"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                value: "25",
-                className: "bg-quantity text-white",
-                children: "Show 25"
-              })]
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          className: "row mt-3 gy-4",
-          children: stateBook.book.map(function (item, i) {
-            if (item.book_cover_photo == null) {
-              item.book_cover_photo = "bookNull";
-            }
-
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-              className: "col-md-3",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
-                to: "/books/".concat(item.book_id),
-                style: {
-                  textDecoration: 'none'
-                },
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                  className: "card border border-1 h-100",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-                    src: "http://localhost:8000/assets/bookcover/" + item.book_cover_photo + ".jpg",
-                    className: "card-img-top img-book-card",
-                    alt: "Image Error"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                    className: "card-body",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h5", {
-                      className: "card-title",
-                      children: item.book_title
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
-                      className: "card-text",
-                      children: item.author_name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "accordion-item rounded-3 border border-1 border-dark mt-3",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+                className: "accordion-header",
+                id: "headingThree",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "accordion-button collapsed",
+                  type: "button",
+                  "data-bs-toggle": "collapse",
+                  "data-bs-target": "#collapseThree",
+                  "aria-expanded": "false",
+                  "aria-controls": "collapseThree",
+                  children: "Rating Review"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                id: "collapseThree",
+                className: "accordion-collapse collapse",
+                "aria-labelledby": "headingThree",
+                "data-bs-parent": "#accordionExample",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "accordion-body",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("ul", {
+                    className: "list-group",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                      className: "list-group-item list-group-item-action",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilterStar({
+                          filterStar: 1
+                        });
+                      },
+                      children: "1 Star"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                      className: "list-group-item list-group-item-action",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilterStar({
+                          filterStar: 2
+                        });
+                      },
+                      children: "2 Star"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                      className: "list-group-item list-group-item-action",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilterStar({
+                          filterStar: 3
+                        });
+                      },
+                      children: "3 Star"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                      className: "list-group-item list-group-item-action",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilterStar({
+                          filterStar: 4
+                        });
+                      },
+                      children: "4 Star"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                      className: "list-group-item list-group-item-action",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilterStar({
+                          filterStar: 5
+                        });
+                      },
+                      children: "5 Star"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                      className: "list-group-item list-group-item-action",
+                      role: "button",
+                      onClick: function onClick() {
+                        return setStateFilterStar({
+                          filterStar: null
+                        });
+                      },
+                      children: "All Star"
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                    className: "card-footer text-white",
-                    children: item.discount_price != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                        className: "d-inline text-decoration-line-through fw-light",
-                        style: {
-                          marginRight: "5px"
-                        },
-                        children: ["$", item.book_price]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                        className: "d-inline fw-bold",
-                        children: ["$", item.discount_price]
-                      })]
-                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                        className: "fw-bold",
-                        children: ["$", item.book_price]
-                      })
-                    })
-                  })]
+                  })
                 })
-              })
-            }, i);
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          className: "d-flex justify-content-center mt-5",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_js_pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            activePage: statePage.activePage,
-            itemsCountPerPage: statePage.itemsCountPerPage,
-            totalItemsCount: statePage.totalItemsCount,
-            pageRangeDisplayed: 3 //firstPageText="First"
-            ,
-            prevPageText: "Previous",
-            nextPageText: "Next" //lastPageText="Last"
-            ,
-            onChange: handlePageChange,
-            itemClass: "page-item",
-            linkClass: "page-link"
-          })
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "col-md-10",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "d-flex justify-content-between",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
+              style: {
+                marginRight: "20px"
+              },
+              children: ["Showing ", statePage.from, "-", statePage.to, " of ", statePage.totalItemsCount, " books"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "d-flex",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                value: stateSort.sort,
+                onChange: handleChangeSort,
+                style: {
+                  marginRight: "10px"
+                },
+                className: "dropdown btn bg-quantity text-white",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "onSale",
+                  className: "bg-quantity text-white",
+                  children: "Sort by on sale"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "popularity",
+                  className: "bg-quantity text-white",
+                  children: "Sort by popularity"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "priceAsc",
+                  className: "bg-quantity text-white",
+                  children: "Sort by price: low to high"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "priceDesc",
+                  className: "bg-quantity text-white",
+                  children: "Sort by price: high to low"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                value: statePaginate.paginate,
+                onChange: handleChangePaginate,
+                style: {
+                  marginRight: "10px"
+                },
+                className: "dropdown btn bg-quantity text-white",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "5",
+                  className: "bg-quantity text-white",
+                  children: "Show 5"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "15",
+                  className: "bg-quantity text-white",
+                  children: "Show 15"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "20",
+                  className: "bg-quantity text-white",
+                  children: "Show 20"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "25",
+                  className: "bg-quantity text-white",
+                  children: "Show 25"
+                })]
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "row mt-3 gy-4",
+            children: stateBook.book.map(function (item, i) {
+              if (item.book_cover_photo == null) {
+                item.book_cover_photo = "bookNull";
+              }
+
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "col-md-3",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
+                  to: "/books/".concat(item.book_id),
+                  style: {
+                    textDecoration: 'none'
+                  },
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                    className: "card border border-1 h-100",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                      src: "http://localhost:8000/assets/bookcover/" + item.book_cover_photo + ".jpg",
+                      className: "card-img-top img-book-card",
+                      alt: "Image Error"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      className: "card-body",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h5", {
+                        className: "card-title",
+                        children: item.book_title
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                        className: "card-text",
+                        children: item.author_name
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      className: "card-footer text-white",
+                      children: item.discount_price != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                          className: "d-inline text-decoration-line-through fw-light",
+                          style: {
+                            marginRight: "5px"
+                          },
+                          children: ["$", item.book_price]
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                          className: "d-inline fw-bold",
+                          children: ["$", item.discount_price]
+                        })]
+                      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                          className: "fw-bold",
+                          children: ["$", item.book_price]
+                        })
+                      })
+                    })]
+                  })
+                })
+              }, i);
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "d-flex justify-content-center mt-5",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_js_pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
+              activePage: statePage.activePage,
+              itemsCountPerPage: statePage.itemsCountPerPage,
+              totalItemsCount: statePage.totalItemsCount,
+              pageRangeDisplayed: 3 //firstPageText="First"
+              ,
+              prevPageText: "Previous",
+              nextPageText: "Next" //lastPageText="Last"
+              ,
+              onChange: handlePageChange,
+              itemClass: "page-item",
+              linkClass: "page-link"
+            })
+          })]
         })]
       })]
-    })]
+    })
   });
 }
 
@@ -13483,7 +13788,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".btn-qty {\r\n    color: white;\r\n    background-color: #00AFF0;\r\n}\r\n\r\nth {\r\n    text-align: left;\r\n    width: 100px;   \r\n}\r\n\r\ntd {\r\n    vertical-align: middle;\r\n    overflow: hidden;\r\n}\r\n\r\n.btn-place-order {\r\n    color: white;\r\n    background-color: #00AFF0 !important;\r\n}\r\n\r\n.product-info {\r\n    display: flex;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".btn-qty {\r\n    color: white;\r\n    background-color: #00AFF0;\r\n}\r\n\r\nth {\r\n    text-align: left;\r\n    width: 100px;   \r\n}\r\n\r\ntd {\r\n    vertical-align: middle;\r\n    overflow: hidden;\r\n}\r\n\r\n.btn-place-order {\r\n    color: white;\r\n    background-color: #00AFF0 !important;\r\n}\r\n\r\n.product-info {\r\n    display: flex;\r\n}\r\n\r\n.old-price {\r\n    font-size: 14px;\r\n    color: darkgray;\r\n}\r\n\r\na {\r\n    color: black;\r\n}\r\n\r\na:hover {\r\n    color: #00AFF0;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

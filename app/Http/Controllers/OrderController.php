@@ -55,6 +55,18 @@ class OrderController extends Controller
         ]);
     }
 
+    public function storeOrder(Request $request)
+    {
+        $orders = $this->orderRepository->saveOrder($request);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Order Stored',
+        //     'data'    => $orders
+        // ]);
+
+        return $orders;
+    }
+
     /**
      * Display the specified resource.
      *
