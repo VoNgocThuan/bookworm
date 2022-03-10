@@ -25,17 +25,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/logout', [AuthController::class, 'logout']);
-
 Route::middleware(['auth:sanctum'])->group(function () {
-    
+    Route::post('/orders', [OrderController::class, 'storeOrder']);
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
-
-//Route::resource('/orders', OrderController::class);
-
-Route::post('/orders', [OrderController::class, 'storeOrder']);
-
-Route::resource('/users', UserController::class);
 
 Route::get('/users/full-name/{id}', [UserController::class, 'showUserFullName']);
 
@@ -57,7 +50,7 @@ Route::get('/categories/name-shoppage', [CategoryController::class, 'show5Catego
 
 Route::get('/authors/name-shoppage', [AuthorController::class, 'show10AuthorNames']);
 
-Route::post('/reviews', [ReviewController::class, 'store']);
+Route::resource('/reviews', ReviewController::class);
 
 Route::get('/reviews/{id}', [ReviewController::class, 'showReviewOfBook']);
 

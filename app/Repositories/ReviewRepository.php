@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CrudInterface;
 use App\Models\Review;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -119,6 +120,7 @@ class ReviewRepository implements CrudInterface
         $reviews->review_title = $request->review_title;
         $reviews->review_details = $request->review_details;
         $reviews->rating_start = $request->rating_start;
+        $reviews->review_date = Carbon::now();
         $reviews->save();
 
         return $reviews;

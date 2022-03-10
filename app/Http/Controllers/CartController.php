@@ -2,116 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use Darryldecode\Cart\Facades\CartFacade;
+use App\Repositories\CartRepository;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    public $cartRepositoty;
+
+    public function __construct(CartRepository $cartRepositoty)
+    {
+        $this->cartRepositoty = $cartRepositoty;
+    }
+
     public function cartList()
     {
-        $cartItems = CartFacade::getContent();
+        $cartList = $this->cartRepositoty->list();
 
-        return $cartItems;
+        return $cartList;
     }
 
     public function totalCart()
     {
-        $cartTotal = CartFacade::getTotal();
+        $total = $this->cartRepositoty->total();
 
-        return $cartTotal;
+        return $total;
     }
 
     public function totalQuantity()
     {
-        $cartTotalQuantity = CartFacade::getTotalQuantity();
+        $totalQty = $this->cartRepositoty->quantity();
 
-        return $cartTotalQuantity;
+        return $totalQty;
     }
 
     public function addToCart(Request $request)
     {
-        if($request->discount_price == null) {
-            $book_price = $request->book_price;
-        } else {
-            $book_price = $request->discount_price;
-        }
-        $add = CartFacade::add([
-            'id' => $request->id,
-            'name' => $request->book_title,
-            'price' => $book_price,
-            'quantity' => $request->quantity,
-            'attributes' => array(
-                'image' => $request->book_cover_photo,
-                'old_price' => $request->book_price,
-                'author_name' => $request->author_name
-            )
-        ]);
+        $addToCart = $this->cartRepositoty->add($request);
 
-        if ($add) {
-            return "Thêm thành công vào giỏ hàng";
-        }
+        return $addToCart;
     }
 
     public function getCartDetail(Request $request)
     {
-        return CartFacade::get($request->id);
+        $cartDetails = $this->cartRepositoty->details($request);
+
+        return $cartDetails;
     }
 
     public function updateCart(Request $request)
     {
-        $update = CartFacade::update($request->id, [
-            'quantity' => [
-                'relative' => false,
-                'value' => $request->quantity
-            ],
-        ]);
-        if ($update) {
-            return "Cập nhật số lượng thành công";
-        }
+        $updateCart = $this->cartRepositoty->update($request);
+
+        return $updateCart;
     }
 
     public function updateCartIncrement(Request $request)
     {
-        $increment = CartFacade::update($request->id, [
-            'quantity' => [
-                'relative' => false,
-                'value' => $request->quantity + 1
-            ],
-        ]);
-        if ($increment) {
-            return "Tăng số lượng thành công";
-        }
+        $increment = $this->cartRepositoty->qtyIncrement($request);
+
+        return $increment;
     }
 
     public function updateCartDecrement(Request $request)
     {
-        $decrement = CartFacade::update($request->id, [
-            'quantity' => [
-                'relative' => false,
-                'value' => $request->quantity - 1
-            ],
-        ]);
-        if ($decrement) {
-            return "Giảm số lượng thành công";
-        }
+        $decrement = $this->cartRepositoty->qtyDecrement($request);
+
+        return $decrement;
     }
 
     public function removeCart(Request $request)
     {
-        $remove = CartFacade::remove($request->id);
-        
-        if ($remove) {
-            return "Xóa thành công";
-        }
+        $removeCartItem = $this->cartRepositoty->remove($request);
+
+        return $removeCartItem;
     }
 
     public function clearAllCart()
     {
-        $clear = CartFacade::clear();
+        $clearCart = $this->cartRepositoty->clear();
 
-        if ($clear) {
-            return "Xóa thành công";
-        }
+        return $clearCart;
     }
 }

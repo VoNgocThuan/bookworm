@@ -2,12 +2,15 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import "./cart.css"
 import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { setTotalCartQty } from '../../actions/index'
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const access_token = useSelector((state) => state.accessToken.currentAccessToken);
 
   const [stateCart, setStateCart] = useState({
     cartList: [],
@@ -89,7 +92,13 @@ export default function Cart() {
   async function placeOrder() {
     const res = await Axios.post('http://localhost:8000/api/orders', {
       user_id: getLoginData.data.user_id,
-      order_amount: stateCartTotal.cartTotal
+      order_amount: stateCartTotal.cartTotal,
+    }, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-type": "Application/json",
+        "Authorization": `Bearer ${getLoginData.data.access_token}`
+      }
     })
     checkStatusPlaceOrder(res.data);
     removeCartItemUnavailable(res.data)
@@ -119,10 +128,6 @@ export default function Cart() {
     ))
   }
 
-  // Object.keys(stateCartUnavailable.cartListUnavailable).map((item) => {
-  //   console.log(stateCartUnavailable.cartListUnavailable[item].book_name)
-  // })
-
   useEffect(() => {
     getCartData();
     getCartTotal();
@@ -148,7 +153,7 @@ export default function Cart() {
             <h4 className="alert-heading">Error</h4>
             {Object.keys(stateCartUnavailable.cartListUnavailable).map((item, i) => (
               <p key={i}>
-                Book {stateCartUnavailable.cartListUnavailable[item].book_name}, 
+                Book {stateCartUnavailable.cartListUnavailable[item].book_name},
                 Price {stateCartUnavailable.cartListUnavailable[item].price}$ is unavailable!
               </p>
             ))}

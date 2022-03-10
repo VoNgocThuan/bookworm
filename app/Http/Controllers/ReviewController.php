@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use App\Repositories\ReviewRepository;
 use Illuminate\Http\Request;
 
@@ -47,11 +48,29 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'review_title' => 'required|alpha_num|max:120',
+            'review_details' => 'nullable'
+        ], [
+            'review_title.required' => 'You have not entered the review title!',
+            'review_title.alpha_num' => 'Review title content contains only letters or numbers',
+            'review_title.max' => 'Review title content must be less than 120 characters in length'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->getMessageBag()->first(),
+                'errors' => $validator->getMessageBag(),
+            ]);
+        }
+
         $reviews = $this->reviewRepository->create($request);
+
         return response()->json([
             'success' => true,
             'message' => 'Review Stored',
-            'data'    => $reviews
+            'data'    => $reviews,
         ]);
     }
 
@@ -89,27 +108,31 @@ class ReviewController extends Controller
         ]);
     }
 
-    public function showBookReviewTotal($bookId) {
+    public function showBookReviewTotal($bookId)
+    {
         $reviews = $this->reviewRepository->getBookReviewTotal($bookId);
-        
+
         return $reviews;
     }
 
-    public function showBookReviewAvgStar($bookId) {
+    public function showBookReviewAvgStar($bookId)
+    {
         $reviews = $this->reviewRepository->getBookReviewAvgStar($bookId);
-        
+
         return $reviews;
     }
 
-    public function showBookReviewListing($bookId) {
+    public function showBookReviewListing($bookId)
+    {
         $reviews = $this->reviewRepository->getBookReviewListing($bookId);
-        
+
         return $reviews;
     }
 
-    public function showBookReviewCondition(Request $request, $bookId) {
+    public function showBookReviewCondition(Request $request, $bookId)
+    {
         $reviews = $this->reviewRepository->getBookReviewCondition($request, $bookId);
-        
+
         return $reviews;
     }
 

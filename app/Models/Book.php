@@ -64,9 +64,9 @@ class Book extends Model
         $books = DB::table('book')
             ->join('author', 'book.author_id', '=', 'author.id')
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
-            ->select('author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'book.book_price')
+            ->select('author.author_name', 'discount.discount_price', 'book.id as book_id', 'book.book_title', 'book.book_cover_photo', 'book.book_price')
             ->selectRaw('(CASE WHEN discount.discount_price is null THEN book.book_price ELSE discount.discount_price END) AS final_price')
-            ->groupBy('author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
+            ->groupBy('author.author_name', 'discount.discount_price', 'book.id', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
 
         return $books;
     }

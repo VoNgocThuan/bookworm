@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./header.css"
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setTotalCartQty } from '../../actions/index'
+import { setTotalCartQty, setAccessToken, setUserId } from '../../actions/index'
 
 function Header() {
     const [activeMenu, setActiveMenu] = useState('home')
     const access_token = useSelector((state) => state.accessToken.currentAccessToken);
     const user_id = useSelector((state) => state.userId.currentUserId);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const getLoginData = JSON.parse(localStorage.getItem("loginUserData"));
     const totalCartQty = useSelector((state) => state.totalCartQty.currentTotalCartQty);
 
@@ -52,15 +53,17 @@ function Header() {
 
     const signOut = function () {
         if (getLoginData != null) {
-            Axios.post('http://localhost:8000/api/logout', getLoginData.data.access_token).then(response => {
-                if (response.data.error) {
-                    console.log(response.data.error)
-                } else {
-                    dispatch(setAccessToken(response.data.access_token));
-                    dispatch(setUserId(response.data.user_id));
-                    localStorage.removeItem("loginUserData");
-                    navigate('/');
+            Axios.get('http://localhost:8000/api/logout', {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-type": "Application/json",
+                    "Authorization": `Bearer ${getLoginData.data.access_token}`
                 }
+            }).then(response => {
+                dispatch(setAccessToken(response.data.access_token));
+                dispatch(setUserId(response.data.user_id));
+                localStorage.removeItem("loginUserData");
+                //navigate('/');
             })
         }
         else {
@@ -68,7 +71,7 @@ function Header() {
                 dispatch(setAccessToken(response.data.access_token));
                 dispatch(setUserId(response.data.user_id));
                 localStorage.removeItem("loginUserData");
-                navigate('/');
+                //navigate('/');
             })
         }
 
@@ -114,34 +117,18 @@ function Header() {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        {getLoginData != null ? (
-                            <Link
-                                to="/cart"
-                                className={activeMenu == 'cart' ? 'active nav-link' : 'nav-link'}
-                                style={{ textDecoration: 'none' }}
-                                onClick={() => { setActiveMenu('cart') }}
-                            >
-                                {/* Cart({stateCartTotalQty.cartTotalQty}) */}
-                                {totalCartQty.newTotalCartQty != null ? (
-                                    <div>Cart({totalCartQty.newTotalCartQty})</div>
-                                ) : (
-                                    <div>Cart(0)</div>
-                                )}
-                            </Link>
-                        ) : (
-                            <Link
-                                to="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                data-bs-whatever="@getbootstrap"
-                                className="nav-link"
-                                style={{ textDecoration: 'none' }}
-                                onClick={() => { setActiveMenu('signin') }}
-                            >
-                                Cart({totalCartQty.newTotalCartQty})
-                            </Link>
-                        )}
-
+                        <Link
+                            to="/cart"
+                            className={activeMenu == 'cart' ? 'active nav-link' : 'nav-link'}
+                            style={{ textDecoration: 'none' }}
+                            onClick={() => { setActiveMenu('cart') }}
+                        >
+                            {totalCartQty.newTotalCartQty != null ? (
+                                <div>Cart({totalCartQty.newTotalCartQty})</div>
+                            ) : (
+                                <div>Cart(0)</div>
+                            )}
+                        </Link>
                     </li>
                     {getLoginData != null ? (
                         <li className="nav-item">
