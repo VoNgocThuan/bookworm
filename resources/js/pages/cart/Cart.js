@@ -245,14 +245,23 @@ export default function Cart() {
                               disabled
                               value={stateCart.cartList[item].quantity}
                             />
-                            <button
-                              className="btn btn-qty"
-                              onClick={() => {
-                                updateCartQtyIn(stateCart.cartList[item].id, stateCart.cartList[item].quantity)
-                              }}
-                            >
-                              +
-                            </button>
+                            {stateCart.cartList[item].quantity == 8 ? (
+                              <button
+                                className="btn btn-secondary"
+                                disabled
+                              >
+                                +
+                              </button>
+                            ) : (
+                              <button
+                                className="btn btn-qty"
+                                onClick={() => {
+                                  updateCartQtyIn(stateCart.cartList[item].id, stateCart.cartList[item].quantity)
+                                }}
+                              >
+                                +
+                              </button>
+                            )}
                           </div>
                         </td>
                         <td>

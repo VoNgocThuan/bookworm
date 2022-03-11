@@ -281,94 +281,98 @@ export default function BookDetail() {
         <div className='container'>
             {Object.keys(state.book).map(
                 (item, i) => (
-                    <div className='row'>
-                        <div className='col-md-8'>
-                            <div className='row border-book-detail rounded-3 border-1'>
-                                <div className='col-md-4 p-0'>
-                                    {state.book[item].book_cover_photo != null ? (
-                                        <img src={"http://localhost:8000/bookcover/" + state.book[item].book_cover_photo + ".jpg"} className="card-img-top" alt="abc" />
-                                    ) : (
-                                        <img src={"http://localhost:8000/bookcover/bookNull.jpg"} className="card-img-top" alt="abc" />
-                                    )}
-                                    <p className='fl-right d-inline'>By <h6 className='d-inline'>{state.book[item].author_name}</h6></p>
-                                </div>
-                                <div className='col-md-8'>
-                                    <div className='mt-3'>
-                                        <h4>{state.book[item].book_title}</h4>
-                                        <p>{state.book[item].book_summary}</p>
+                    <>
+                        <h3 className="fs-4 fw-bold d-inline">Category: {state.book[item].category_name}</h3>
+                        <hr className='mt-4 mb-4'></hr>
+                        <div className='row'>
+                            <div className='col-md-8'>
+                                <div className='row border-book-detail rounded-3 border-1'>
+                                    <div className='col-md-4 p-0'>
+                                        {state.book[item].book_cover_photo != null ? (
+                                            <img src={"http://localhost:8000/bookcover/" + state.book[item].book_cover_photo + ".jpg"} className="card-img-top" alt="abc" />
+                                        ) : (
+                                            <img src={"http://localhost:8000/bookcover/bookNull.jpg"} className="card-img-top" alt="abc" />
+                                        )}
+                                        <p className='fl-right d-inline'>By <h6 className='d-inline'>{state.book[item].author_name}</h6></p>
+                                    </div>
+                                    <div className='col-md-8'>
+                                        <div className='mt-3'>
+                                            <h4>{state.book[item].book_title}</h4>
+                                            <p>{state.book[item].book_summary}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='border-book-detail rounded-3 border-1'>
-                                <div className='bg-quantity px-5 text-white border-book-detail rounded-3 border-1'>
-                                    {state.book[item].discount_price != null ? (
-                                        <div>
-                                            <div className='d-inline text-decoration-line-through fw-light fs-5' style={{ marginRight: "10px" }}>
+                            <div className='col-md-4'>
+                                <div className='border-book-detail rounded-3 border-1'>
+                                    <div className='bg-quantity px-5 text-white border-book-detail rounded-3 border-1'>
+                                        {state.book[item].discount_price != null ? (
+                                            <div>
+                                                <div className='d-inline text-decoration-line-through fw-light fs-5' style={{ marginRight: "10px" }}>
+                                                    ${state.book[item].book_price}
+                                                </div>
+                                                <div className='d-inline fw-bold fs-4'>
+                                                    ${state.book[item].discount_price}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className='d-inline fw-bold fs-4'>
                                                 ${state.book[item].book_price}
                                             </div>
-                                            <div className='d-inline fw-bold fs-4'>
-                                                ${state.book[item].discount_price}
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className='d-inline fw-bold fs-4'>
-                                            ${state.book[item].book_price}
-                                        </div>
-                                    )}
+                                        )}
 
-                                </div>
-                                <div className='mt-5 px-5'>
-                                    <h5>Quantity</h5>
-                                    <div className="bm-flex bg-quantity text-white height-quantity rounded-3 border-1">
-                                        <button
-                                            type='button'
-                                            className='btn btn-info text-white'
-                                            onClick={() => {
-                                                if (stateQty.quantity > 1) {
-                                                    setStateQty({
-                                                        quantity: stateQty.quantity - 1
-                                                    })
-                                                }
-                                            }}
-                                        >
-                                            -
-                                        </button>
-                                        <div>{stateQty.quantity}</div>
-                                        <button
-                                            type='button'
-                                            className='btn btn-info text-white'
-                                            onClick={() => {
-                                                if (stateQty.quantity < 8) {
-                                                    setStateQty({
-                                                        quantity: stateQty.quantity + 1
-                                                    })
-                                                }
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                     </div>
-
-                                    <button
-                                        type="button"
-                                        className="btn text-white bg-quantity mt-4 w-100 mb-5"
-                                        onClick={
-                                            handleAddToCart
-                                        }
-                                    >
-                                        Add to cart
-                                    </button>
-                                    {isError == false && (
-                                        <div className="alert alert-success text-center" role="alert">
-                                            Add to cart successfully!
+                                    <div className='mt-5 px-5'>
+                                        <h5>Quantity</h5>
+                                        <div className="bm-flex bg-quantity text-white height-quantity rounded-3 border-1">
+                                            <button
+                                                type='button'
+                                                className='btn btn-info text-white'
+                                                onClick={() => {
+                                                    if (stateQty.quantity > 1) {
+                                                        setStateQty({
+                                                            quantity: stateQty.quantity - 1
+                                                        })
+                                                    }
+                                                }}
+                                            >
+                                                -
+                                            </button>
+                                            <div>{stateQty.quantity}</div>
+                                            <button
+                                                type='button'
+                                                className='btn btn-info text-white'
+                                                onClick={() => {
+                                                    if (stateQty.quantity < 8) {
+                                                        setStateQty({
+                                                            quantity: stateQty.quantity + 1
+                                                        })
+                                                    }
+                                                }}
+                                            >
+                                                +
+                                            </button>
                                         </div>
-                                    )}
+
+                                        <button
+                                            type="button"
+                                            className="btn text-white bg-quantity mt-4 w-100 mb-5"
+                                            onClick={
+                                                handleAddToCart
+                                            }
+                                        >
+                                            Add to cart
+                                        </button>
+                                        {isError == false && (
+                                            <div className="alert alert-success text-center" role="alert">
+                                                Add to cart successfully!
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </>
                 )
             )}
 

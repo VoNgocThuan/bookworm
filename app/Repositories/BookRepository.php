@@ -189,7 +189,7 @@ class BookRepository implements CrudInterface
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
             ->join('author', 'book.author_id', '=', 'author.id')
             ->where('book.id', '=', $id)
-            ->select('book.id as book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'book.book_summary', 'author.author_name')
+            ->select('book.id as book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'book.book_summary', 'author.author_name', 'category.category_name')
             ->get();
 
         return $bookDetail;

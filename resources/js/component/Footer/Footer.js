@@ -12,7 +12,7 @@ export default function Footer() {
                     <div className="col-lg-10 col-10 p-3">
                         <p> BOOKWORM </p>
                         <p> ADDRESS </p>
-                        <p> +1 - 256 845 87 86</p>
+                        <p> 0843339738</p>
                     </div>
                 </div>
             </div>
