@@ -14,7 +14,7 @@ export default function BookDetail() {
     });
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(true);
+    const [isError, setIsError] = useState(undefined);
 
     const [stateErrorReview, setStateErrorReview] = useState({
         errorReview: undefined
@@ -67,12 +67,11 @@ export default function BookDetail() {
 
     const [stateReviewDetail, setStateReviewDetail] = useState('');
 
+    const [stateReviewDate, setStateReviewDate] = useState('');
+
     const [stateReviewStar, setStateReviewStar] = useState({
         reviewStar: 1
     });
-
-    console.log(stateReviewTitle)
-    console.log(stateReviewDetail)
 
     const handleChangeSort = (e) => {
         setStateSort(prevStateSort => ({
@@ -112,16 +111,17 @@ export default function BookDetail() {
                         author_name: state.book[item].author_name
                     }).then(
                         getCartTotalQuantity(),
+                        getCartDetail(),
+                        setIsError(false),
+                        setTimeout(() => {
+                            setIsError(undefined);
+                        }, 5000),
                     )
                 ))
             }
             else {
                 handleUpdateCartQty();
             }
-            setIsError(false);
-            setTimeout(() => {
-                setIsError(true);
-            }, 3000)
         } catch (error) {
             setIsError(true);
         }
@@ -161,8 +161,17 @@ export default function BookDetail() {
                 id: id,
                 quantity: stateCart.cart.quantity + stateQty.quantity
             }).then(
-                getCartTotalQuantity()
+                getCartTotalQuantity(),
+                setIsError(false),
+                setTimeout(() => {
+                    setIsError(undefined);
+                }, 5000)
             )
+        } else {
+            setIsError(true);
+            setTimeout(() => {
+                setIsError(undefined);
+            }, 5000)
         }
     }
 
@@ -201,7 +210,7 @@ export default function BookDetail() {
         const resReviewTotal = await Axios.get(`http://localhost:8000/api/reviews/total/${id}`);
         const resReviewAvg = await Axios.get(`http://localhost:8000/api/reviews/avg/${id}`);
         const reviewAvgStar = Math.round(resReviewAvg.data * 10) / 10;
-
+        
         if (stateFilter.filter != null) {
             const resReviewCondition = await Axios.get(`http://localhost:8000/api/reviews/condition/${id}?filter[rating_star]=${stateFilter.filter}&sort[type]=${stateSort.sort}&paginate=${statePaginate.paginate}&page=${statePage.activePage}`)
             const newArray = resReviewListing.data.slice();
@@ -265,6 +274,15 @@ export default function BookDetail() {
         setIsLoading(false);
     }
 
+    
+
+    function formatReviewDate ($review_id) {
+        const res = Axios.post('http://localhost:8000/api/reviews/format-review-date', {
+            review_id: $review_id
+        })
+        return res;
+    }
+
     const getCartTotalQuantity = async () => {
         const res = await Axios.get('http://localhost:8000/api/cart/total-qty');
         dispatch(setTotalCartQty(res.data))
@@ -325,33 +343,49 @@ export default function BookDetail() {
                                     <div className='mt-5 px-5'>
                                         <h5>Quantity</h5>
                                         <div className="bm-flex bg-quantity text-white height-quantity rounded-3 border-1">
-                                            <button
-                                                type='button'
-                                                className='btn btn-info text-white'
-                                                onClick={() => {
-                                                    if (stateQty.quantity > 1) {
+                                            {stateQty.quantity > 1 ? (
+                                                <button
+                                                    type='button'
+                                                    className='btn btn-info text-white'
+                                                    onClick={() => {
                                                         setStateQty({
                                                             quantity: stateQty.quantity - 1
                                                         })
-                                                    }
-                                                }}
-                                            >
-                                                -
-                                            </button>
+                                                    }}
+                                                >
+                                                    -
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type='button'
+                                                    className='btn btn-info text-white'
+                                                    disabled
+                                                >
+                                                    -
+                                                </button>
+                                            )}
                                             <div>{stateQty.quantity}</div>
-                                            <button
-                                                type='button'
-                                                className='btn btn-info text-white'
-                                                onClick={() => {
-                                                    if (stateQty.quantity < 8) {
+                                            {stateQty.quantity < 8 ? (
+                                                <button
+                                                    type='button'
+                                                    className='btn btn-info text-white'
+                                                    onClick={() => {
                                                         setStateQty({
                                                             quantity: stateQty.quantity + 1
                                                         })
-                                                    }
-                                                }}
-                                            >
-                                                +
-                                            </button>
+                                                    }}
+                                                >
+                                                    +
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type='button'
+                                                    className='btn btn-info text-white'
+                                                    disabled
+                                                >
+                                                    +
+                                                </button>
+                                            )}
                                         </div>
 
                                         <button
@@ -363,10 +397,16 @@ export default function BookDetail() {
                                         >
                                             Add to cart
                                         </button>
-                                        {isError == false && (
+                                        {isError == false ? (
                                             <div className="alert alert-success text-center" role="alert">
                                                 Add to cart successfully!
                                             </div>
+                                        ) : isError == true ? (
+                                            <div className="alert alert-warning text-center" role="alert">
+                                                The maximum number of books you can add to your cart is 8!
+                                            </div>
+                                        ) : (
+                                            <div></div>
                                         )}
                                     </div>
                                 </div>
@@ -430,7 +470,7 @@ export default function BookDetail() {
                                 <h4 className='fw-bold fs-5 d-inline'>{stateReview.reviewCondition[item].review_title}</h4> |
                                 <span className='d-inline'> {stateReview.reviewCondition[item].rating_start} stars</span>
                                 <p>{stateReview.reviewCondition[item].review_details}</p>
-                                <p>{stateReview.reviewCondition[item].review_date}</p>
+                                <p>{stateReview.reviewCondition[item].review_date_formatted}</p>
                                 <hr className='mt-5'></hr>
                             </div>
                         ))}
@@ -462,12 +502,13 @@ export default function BookDetail() {
                                     type="text"
                                     className="form-control"
                                     id="exampleFormControlInput1"
-                                    placeholder="title"
                                     onChange={e => setStateReviewTitle(e.target.value)}
                                 />
                             </div>
                             {stateErrorReview.errorReview && stateErrorReview.errorReview.review_title && (
-                                <p className="text-danger">{stateErrorReview.errorReview.review_title[0]}</p>
+                                <div className="alert alert-danger text-danger" role="alert">
+                                    {stateErrorReview.errorReview.review_title[0]}
+                                </div>
                             )}
                             <div className="form-group mt-4">
                                 <label for="exampleFormControlTextarea1" className='font-size-review'>

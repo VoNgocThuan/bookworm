@@ -10,8 +10,6 @@ export default function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const access_token = useSelector((state) => state.accessToken.currentAccessToken);
-
   const [stateCart, setStateCart] = useState({
     cartList: [],
   });
@@ -184,7 +182,7 @@ export default function Cart() {
                     <tbody>
                       <tr key={i}>
                         <td colSpan={3}>
-                          <Link to={`/books/${stateCart.cartList[item].id}`} style={{ textDecoration: 'none' }}>
+                          {/* <Link to={`/books/${stateCart.cartList[item].id}`} style={{ textDecoration: 'none' }}>
                             <div className='product-info'>
                               <div className='d-inline'>
                                 <img
@@ -203,7 +201,28 @@ export default function Cart() {
                                 </p>
                               </div>
                             </div>
-                          </Link>
+                          </Link> */}
+                          <div className='product-info'
+                            role="button"
+                            onClick={() => window.open(`/books/${stateCart.cartList[item].id}`)}
+                          >
+                            <div className='d-inline'>
+                              <img
+                                src={"http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg"}
+                                className="rounded-start"
+                                style={{ width: "130px", height: "130px" }}
+                                alt="Image Error"
+                              />
+                            </div>
+                            <div className='d-inline' style={{ marginLeft: "10px" }}>
+                              <h5 className='d-inline'>
+                                {stateCart.cartList[item].name}
+                              </h5>
+                              <p>
+                                {stateCart.cartList[item].attributes.author_name}
+                              </p>
+                            </div>
+                          </div>
                         </td>
                         {stateCart.cartList[item].price != stateCart.cartList[item].attributes.old_price ? (
                           <td>
@@ -229,7 +248,7 @@ export default function Cart() {
                             <button
                               className="btn btn-qty"
                               onClick={() => {
-                                if (stateCart.cartList[item].quantity == 0) {
+                                if (stateCart.cartList[item].quantity == 1) {
                                   removeCartItem(stateCart.cartList[item].id)
                                 }
                                 else {

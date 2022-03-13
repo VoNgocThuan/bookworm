@@ -6,6 +6,7 @@ use App\Interfaces\CrudInterface;
 use App\Models\Review;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class ReviewRepository implements CrudInterface
@@ -78,29 +79,27 @@ class ReviewRepository implements CrudInterface
         switch ($sortValue) {
             case ('newestToOldest'):
                 if ($request->has("filter")) {
-                    $reviews = DB::table('review')
-                        ->where('book_id', $bookId)
+                    $reviews = Review::where('book_id', $bookId)
                         ->where('rating_start', $filterValue)
                         ->orderByDesc('review_date')
                         ->paginate($paginateValue);
                 } else {
-                    $reviews = DB::table('review')
+                    $reviews = Review::where('book_id', $bookId)
                         ->where('book_id', $bookId)
                         ->orderByDesc('review_date')
                         ->paginate($paginateValue);
                 }
-
                 return $reviews;
                 break;
             case ('oldestToNewest'):
                 if ($request->has("filter")) {
-                    $reviews = DB::table('review')
+                    $reviews = Review::where('book_id', $bookId)
                         ->where('book_id', $bookId)
                         ->where('rating_start', $filterValue)
                         ->orderBy('review_date')
                         ->paginate($paginateValue);
                 } else {
-                    $reviews = DB::table('review')
+                    $reviews = Review::where('book_id', $bookId)
                         ->where('book_id', $bookId)
                         ->orderBy('review_date')
                         ->paginate($paginateValue);

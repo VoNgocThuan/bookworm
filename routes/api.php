@@ -30,45 +30,44 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 
-Route::get('/users/full-name/{id}', [UserController::class, 'showUserFullName']);
+Route::prefix('books')->group(function () {
+    Route::get('/condition', [BookController::class, 'showBookByFilterSortPagi']);
+    Route::get('/onsale', [BookController::class, 'showTop10OnSaleBooks']);
+    Route::get('/recommended', [BookController::class, 'showTop8RecommendedBooks']);
+    Route::get('/popular', [BookController::class, 'showTop8PopularBooks']);
+    Route::get('/{id}', [BookController::class, 'show']);
+});
 
-Route::get('/books/condition', [BookController::class, 'showBookByFilterSortPagi']);
+Route::prefix('categories')->group(function () {
+    Route::get('/name-shoppage', [CategoryController::class, 'show5CategoryName']);
+});
 
-Route::get('/books/onsale', [BookController::class, 'showTop10OnSaleBooks']);
+Route::prefix('users')->group(function () {
+    Route::get('/full-name/{id}', [UserController::class, 'showUserFullName']);
+});
 
-Route::get('/books/recommended', [BookController::class, 'showTop8RecommendedBooks']);
+Route::prefix('authors')->group(function () {
+    Route::get('/name-shoppage', [AuthorController::class, 'show10AuthorNames']);
+});
 
-Route::get('/books/popular', [BookController::class, 'showTop8PopularBooks']);
+Route::prefix('reviews')->group(function () {
+    Route::resource('', ReviewController::class);
+    Route::get('/{id}', [ReviewController::class, 'showReviewOfBook']);
+    Route::get('/total/{id}', [ReviewController::class, 'showBookReviewTotal']);
+    Route::get('/avg/{id}', [ReviewController::class, 'showBookReviewAvgStar']);
+    Route::get('/listing/{id}', [ReviewController::class, 'showBookReviewListing']);
+    Route::get('/condition/{id}', [ReviewController::class, 'showBookReviewCondition']);
+});
 
-Route::resource('/books', BookController::class);
-
-//Route::resource('/categories', CategoryController::class);
-
-Route::get('/categories/name-shoppage', [CategoryController::class, 'show5CategoryName']);
-
-//Route::resource('/authors', AuthorController::class);
-
-Route::get('/authors/name-shoppage', [AuthorController::class, 'show10AuthorNames']);
-
-Route::resource('/reviews', ReviewController::class);
-
-Route::get('/reviews/{id}', [ReviewController::class, 'showReviewOfBook']);
-
-Route::get('/reviews/total/{id}', [ReviewController::class, 'showBookReviewTotal']);
-
-Route::get('/reviews/avg/{id}', [ReviewController::class, 'showBookReviewAvgStar']);
-
-Route::get('/reviews/listing/{id}', [ReviewController::class, 'showBookReviewListing']);
-
-Route::get('/reviews/condition/{id}', [ReviewController::class, 'showBookReviewCondition']);
-
-Route::get('/cart', [CartController::class, 'cartList']);
-Route::post('/cart', [CartController::class, 'addToCart']);
-Route::get('/cart/total', [CartController::class, 'totalCart']);
-Route::get('/cart/total-qty', [CartController::class, 'totalQuantity']);
-Route::get('/cart/{id}', [CartController::class, 'getCartDetail']);
-Route::put('/cart/update-cart', [CartController::class, 'updateCart']);
-Route::put('/cart/update-cart-increment', [CartController::class, 'updateCartIncrement']);
-Route::put('/cart/update-cart-decrement', [CartController::class, 'updateCartDecrement']);
-Route::post('/cart/remove', [CartController::class, 'removeCart']);
-Route::get('clear', [CartController::class, 'clearAllCart']);
+Route::prefix('cart')->group(function () {
+    Route::get('', [CartController::class, 'cartList']);
+    Route::post('', [CartController::class, 'addToCart']);
+    Route::get('/total', [CartController::class, 'totalCart']);
+    Route::get('/total-qty', [CartController::class, 'totalQuantity']);
+    Route::get('/{id}', [CartController::class, 'getCartDetail']);
+    Route::put('/update-cart', [CartController::class, 'updateCart']);
+    Route::put('/update-cart-increment', [CartController::class, 'updateCartIncrement']);
+    Route::put('/update-cart-decrement', [CartController::class, 'updateCartDecrement']);
+    Route::post('/remove', [CartController::class, 'removeCart']);
+});
+Route::get('/clear', [CartController::class, 'clearAllCart']);

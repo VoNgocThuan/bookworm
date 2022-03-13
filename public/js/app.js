@@ -5788,9 +5788,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function Cart() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useDispatch)();
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
-  var access_token = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useSelector)(function (state) {
-    return state.accessToken.currentAccessToken;
-  });
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     cartList: []
@@ -6138,37 +6135,35 @@ function Cart() {
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                     colSpan: 3,
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
-                      to: "/books/".concat(stateCart.cartList[item].id),
-                      style: {
-                        textDecoration: 'none'
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                      className: "product-info",
+                      role: "button",
+                      onClick: function onClick() {
+                        return window.open("/books/".concat(stateCart.cartList[item].id));
                       },
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                        className: "product-info",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                          className: "d-inline",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-                            src: "http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg",
-                            className: "rounded-start",
-                            style: {
-                              width: "130px",
-                              height: "130px"
-                            },
-                            alt: "Image Error"
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                          className: "d-inline",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                        className: "d-inline",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                          src: "http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg",
+                          className: "rounded-start",
                           style: {
-                            marginLeft: "10px"
+                            width: "130px",
+                            height: "130px"
                           },
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
-                            className: "d-inline",
-                            children: stateCart.cartList[item].name
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                            children: stateCart.cartList[item].attributes.author_name
-                          })]
+                          alt: "Image Error"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                        className: "d-inline",
+                        style: {
+                          marginLeft: "10px"
+                        },
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
+                          className: "d-inline",
+                          children: stateCart.cartList[item].name
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                          children: stateCart.cartList[item].attributes.author_name
                         })]
-                      })
+                      })]
                     })
                   }), stateCart.cartList[item].price != stateCart.cartList[item].attributes.old_price ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("td", {
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h5", {
@@ -6190,7 +6185,7 @@ function Cart() {
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                         className: "btn btn-qty",
                         onClick: function onClick() {
-                          if (stateCart.cartList[item].quantity == 0) {
+                          if (stateCart.cartList[item].quantity == 1) {
                             removeCartItem(stateCart.cartList[item].id);
                           } else {
                             updateCartQtyDe(stateCart.cartList[item].id, stateCart.cartList[item].quantity);
@@ -6350,7 +6345,7 @@ function BookDetail() {
       isLoading = _useState4[0],
       setIsLoading = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(undefined),
       _useState6 = _slicedToArray(_useState5, 2),
       isError = _useState6[0],
       setIsError = _useState6[1];
@@ -6442,15 +6437,17 @@ function BookDetail() {
       stateReviewDetail = _useState30[0],
       setStateReviewDetail = _useState30[1];
 
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
+      _useState32 = _slicedToArray(_useState31, 2),
+      stateReviewDate = _useState32[0],
+      setStateReviewDate = _useState32[1];
+
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     reviewStar: 1
   }),
-      _useState32 = _slicedToArray(_useState31, 2),
-      stateReviewStar = _useState32[0],
-      setStateReviewStar = _useState32[1];
-
-  console.log(stateReviewTitle);
-  console.log(stateReviewDetail);
+      _useState34 = _slicedToArray(_useState33, 2),
+      stateReviewStar = _useState34[0],
+      setStateReviewStar = _useState34[1];
 
   var handleChangeSort = function handleChangeSort(e) {
     setStateSort(function (prevStateSort) {
@@ -6495,16 +6492,13 @@ function BookDetail() {
             book_cover_photo: state.book[item].book_cover_photo,
             discount_price: state.book[item].discount_price,
             author_name: state.book[item].author_name
-          }).then(getCartTotalQuantity());
+          }).then(getCartTotalQuantity(), getCartDetail(), setIsError(false), setTimeout(function () {
+            setIsError(undefined);
+          }, 5000));
         });
       } else {
         handleUpdateCartQty();
       }
-
-      setIsError(false);
-      setTimeout(function () {
-        setIsError(true);
-      }, 3000);
     } catch (error) {
       setIsError(true);
     }
@@ -6573,7 +6567,14 @@ function BookDetail() {
       axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/cart/update-cart', {
         id: id,
         quantity: stateCart.cart.quantity + stateQty.quantity
-      }).then(getCartTotalQuantity());
+      }).then(getCartTotalQuantity(), setIsError(false), setTimeout(function () {
+        setIsError(undefined);
+      }, 5000));
+    } else {
+      setIsError(true);
+      setTimeout(function () {
+        setIsError(undefined);
+      }, 5000);
     }
   }
 
@@ -6783,6 +6784,13 @@ function BookDetail() {
     };
   }();
 
+  function formatReviewDate($review_id) {
+    var res = axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost:8000/api/reviews/format-review-date', {
+      review_id: $review_id
+    });
+    return res;
+  }
+
   var getCartTotalQuantity = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var res;
@@ -6890,29 +6898,35 @@ function BookDetail() {
                   children: "Quantity"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
                   className: "bm-flex bg-quantity text-white height-quantity rounded-3 border-1",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                  children: [stateQty.quantity > 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
                     type: "button",
                     className: "btn btn-info text-white",
                     onClick: function onClick() {
-                      if (stateQty.quantity > 1) {
-                        setStateQty({
-                          quantity: stateQty.quantity - 1
-                        });
-                      }
+                      setStateQty({
+                        quantity: stateQty.quantity - 1
+                      });
                     },
+                    children: "-"
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                    type: "button",
+                    className: "btn btn-info text-white",
+                    disabled: true,
                     children: "-"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
                     children: stateQty.quantity
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                  }), stateQty.quantity < 8 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
                     type: "button",
                     className: "btn btn-info text-white",
                     onClick: function onClick() {
-                      if (stateQty.quantity < 8) {
-                        setStateQty({
-                          quantity: stateQty.quantity + 1
-                        });
-                      }
+                      setStateQty({
+                        quantity: stateQty.quantity + 1
+                      });
                     },
+                    children: "+"
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                    type: "button",
+                    className: "btn btn-info text-white",
+                    disabled: true,
                     children: "+"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
@@ -6920,11 +6934,15 @@ function BookDetail() {
                   className: "btn text-white bg-quantity mt-4 w-100 mb-5",
                   onClick: handleAddToCart,
                   children: "Add to cart"
-                }), isError == false && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                }), isError == false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
                   className: "alert alert-success text-center",
                   role: "alert",
                   children: "Add to cart successfully!"
-                })]
+                }) : isError == true ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "alert alert-warning text-center",
+                  role: "alert",
+                  children: "The maximum number of books you can add to your cart is 8!"
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {})]
               })]
             })
           })]
@@ -7041,7 +7059,7 @@ function BookDetail() {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
                 children: stateReview.reviewCondition[item].review_details
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-                children: stateReview.reviewCondition[item].review_date
+                children: stateReview.reviewCondition[item].review_date_formatted
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("hr", {
                 className: "mt-5"
               })]
@@ -7079,13 +7097,13 @@ function BookDetail() {
                 type: "text",
                 className: "form-control",
                 id: "exampleFormControlInput1",
-                placeholder: "title",
                 onChange: function onChange(e) {
                   return setStateReviewTitle(e.target.value);
                 }
               })]
-            }), stateErrorReview.errorReview && stateErrorReview.errorReview.review_title && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-              className: "text-danger",
+            }), stateErrorReview.errorReview && stateErrorReview.errorReview.review_title && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              className: "alert alert-danger text-danger",
+              role: "alert",
               children: stateErrorReview.errorReview.review_title[0]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
               className: "form-group mt-4",
@@ -7783,6 +7801,13 @@ function LoginModal() {
       state = _useState2[0],
       setState = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined),
+      _useState4 = _slicedToArray(_useState3, 2),
+      stateLogin = _useState4[0],
+      setStateLogin = _useState4[1];
+
+  var ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+
   var updateFormInput = function updateFormInput(e) {
     if (e.target.type === "email") {
       setState(function (prevState) {
@@ -7804,13 +7829,21 @@ function LoginModal() {
   var signIn = function signIn() {
     axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/sanctum/csrf-cookie').then(function (response) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('http://localhost:8000/api/login', state).then(function (response) {
-        if (response.data.error) {
-          console.log(response.data.error);
+        if (response.data.message == 'Unauthorized') {
+          setStateLogin(false);
+          setTimeout(function () {
+            setStateLogin(undefined);
+          }, 5000);
         } else {
+          setStateLogin(true);
+          setTimeout(function () {
+            setStateLogin(undefined);
+          }, 5000);
           dispatch((0,_actions_index__WEBPACK_IMPORTED_MODULE_4__.setAccessToken)(response.data.access_token));
           dispatch((0,_actions_index__WEBPACK_IMPORTED_MODULE_4__.setUserId)(response.data.user_id));
           localStorage.setItem("loginUserData", JSON.stringify(response));
           navigate('/');
+          ref.current.click();
         }
       });
     });
@@ -7819,7 +7852,7 @@ function LoginModal() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
     className: "modal fade",
     id: "exampleModal",
-    tabindex: "-1",
+    tabIndex: "-1",
     "aria-labelledby": "exampleModalLabel",
     "aria-hidden": "true",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
@@ -7833,18 +7866,19 @@ function LoginModal() {
             id: "exampleModalLabel",
             children: "LOGIN"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            ref: ref,
             type: "button",
             className: "btn-close",
             "data-bs-dismiss": "modal",
             "aria-label": "Close"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "modal-body",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "mb-3",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                "for": "exampleInputEmail1",
+                htmlFor: "exampleInputEmail1",
                 className: "form-label",
                 children: "Email"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
@@ -7861,7 +7895,7 @@ function LoginModal() {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "mb-3",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                "for": "exampleInputPassword1",
+                htmlFor: "exampleInputPassword1",
                 className: "form-label",
                 children: "Password"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
@@ -7871,7 +7905,11 @@ function LoginModal() {
                 onChange: updateFormInput
               })]
             })]
-          })
+          }), stateLogin == false && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "alert alert-danger text-center",
+            role: "alert",
+            children: "Your email or password is incorrect. Please try again!"
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "modal-footer",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
