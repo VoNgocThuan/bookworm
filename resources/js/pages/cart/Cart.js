@@ -182,37 +182,26 @@ export default function Cart() {
                     <tbody>
                       <tr key={i}>
                         <td colSpan={3}>
-                          {/* <Link to={`/books/${stateCart.cartList[item].id}`} style={{ textDecoration: 'none' }}>
-                            <div className='product-info'>
-                              <div className='d-inline'>
+                          <div className='product-info'
+                            role="button"
+                            onClick={() => window.open(`/books/${stateCart.cartList[item].id}`)}
+                          >
+                            <div className='d-inline'>
+                              {stateCart.cartList[item].attributes.image != null ? (
                                 <img
                                   src={"http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg"}
                                   className="rounded-start"
                                   style={{ width: "130px", height: "130px" }}
                                   alt="Image Error"
                                 />
-                              </div>
-                              <div className='d-inline' style={{ marginLeft: "10px" }}>
-                                <h5 className='d-inline'>
-                                  {stateCart.cartList[item].name}
-                                </h5>
-                                <p>
-                                  {stateCart.cartList[item].attributes.author_name}
-                                </p>
-                              </div>
-                            </div>
-                          </Link> */}
-                          <div className='product-info'
-                            role="button"
-                            onClick={() => window.open(`/books/${stateCart.cartList[item].id}`)}
-                          >
-                            <div className='d-inline'>
-                              <img
-                                src={"http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg"}
-                                className="rounded-start"
-                                style={{ width: "130px", height: "130px" }}
-                                alt="Image Error"
-                              />
+                              ) : (
+                                <img
+                                  src={"http://localhost:8000/assets/bookcover/bookNull.jpg"}
+                                  className="rounded-start"
+                                  style={{ width: "130px", height: "130px" }}
+                                  alt="Image Error"
+                                />
+                              )}
                             </div>
                             <div className='d-inline' style={{ marginLeft: "10px" }}>
                               <h5 className='d-inline'>

@@ -6143,8 +6143,16 @@ function Cart() {
                       },
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                         className: "d-inline",
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                        children: stateCart.cartList[item].attributes.image != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
                           src: "http://localhost:8000/assets/bookcover/" + stateCart.cartList[item].attributes.image + ".jpg",
+                          className: "rounded-start",
+                          style: {
+                            width: "130px",
+                            height: "130px"
+                          },
+                          alt: "Image Error"
+                        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                          src: "http://localhost:8000/assets/bookcover/bookNull.jpg",
                           className: "rounded-start",
                           style: {
                             width: "130px",

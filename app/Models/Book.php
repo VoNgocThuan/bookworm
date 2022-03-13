@@ -39,9 +39,9 @@ class Book extends Model
             ->join('category', 'book.category_id', '=', 'category.id')
             ->join('discount', 'book.id', '=', 'discount.book_id')
             ->join('author', 'book.author_id', '=', 'author.id')
-            ->select('discount.book_id', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'author.author_name')
+            ->select('discount.book_id', 'category.category_name', 'book.book_price', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'author.author_name')
             ->selectRaw('book.book_price - discount.discount_price AS reduced_price')
-            ->groupBy('author.author_name', 'discount.book_id', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
+            ->groupBy('author.author_name', 'discount.book_id', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo', 'category.category_name');
 
         return $onSaleBooks;
     }
@@ -50,11 +50,12 @@ class Book extends Model
     {
         $featuredBooks = DB::table('book')
             ->join('review', 'book.id', '=', 'review.book_id')
+            ->join('category', 'book.category_id', '=', 'category.id')
             ->join('author', 'book.author_id', '=', 'author.id')
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
-            ->select('review.book_id', 'author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'book.book_price')
+            ->select('review.book_id', 'category.category_name', 'author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_cover_photo', 'book.book_price')
             ->selectRaw('(CASE WHEN discount.discount_price is null THEN book.book_price ELSE discount.discount_price END) AS final_price')
-            ->groupBy('review.book_id', 'author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
+            ->groupBy('review.book_id', 'author.author_name', 'discount.discount_price', 'book.book_title', 'book.book_price', 'book.book_cover_photo', 'category.category_name');
 
         return $featuredBooks;
     }
@@ -63,10 +64,11 @@ class Book extends Model
     {
         $books = DB::table('book')
             ->join('author', 'book.author_id', '=', 'author.id')
+            ->join('category', 'book.category_id', '=', 'category.id')
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
-            ->select('author.author_name', 'discount.discount_price', 'book.id as book_id', 'book.book_title', 'book.book_cover_photo', 'book.book_price')
+            ->select('author.author_name', 'category.category_name', 'discount.discount_price', 'book.id as book_id', 'book.book_title', 'book.book_cover_photo', 'book.book_price')
             ->selectRaw('(CASE WHEN discount.discount_price is null THEN book.book_price ELSE discount.discount_price END) AS final_price')
-            ->groupBy('author.author_name', 'discount.discount_price', 'book.id', 'book.book_title', 'book.book_price', 'book.book_cover_photo');
+            ->groupBy('author.author_name', 'discount.discount_price', 'book.id', 'book.book_title', 'book.book_price', 'book.book_cover_photo', 'category.category_name');
 
         return $books;
     }
@@ -74,7 +76,6 @@ class Book extends Model
     public function scopePopularBooks()
     {
         $popularBooks = Book::FeaturedBooks()
-            ->join('category', 'book.category_id', '=', 'category.id')
             ->selectRaw('count(review.book_id) as total_review');
 
         return $popularBooks;
