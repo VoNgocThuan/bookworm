@@ -87,6 +87,7 @@ class BookRepository implements CrudInterface
                             })
                             ->havingRaw('avg(review.rating_start) >= ?', array($filter2Value))
                             ->orderByDesc('total_review')
+                            ->orderBy('final_price')
                             ->paginate($paginateValue);
                     } else {
                         $books = Book::PopularBooks()
@@ -96,12 +97,14 @@ class BookRepository implements CrudInterface
                                 }
                             })
                             ->orderByDesc('total_review')
+                            ->orderBy('final_price')
                             ->paginate($paginateValue);
                     }
                     return $books;
                 } else {
                     $books = Book::PopularBooks()
                         ->orderByDesc('total_review')
+                        ->orderBy('final_price')
                         ->paginate($paginateValue);
                     return $books;
                 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./header.css"
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,6 @@ function Header() {
     const access_token = useSelector((state) => state.accessToken.currentAccessToken);
     const user_id = useSelector((state) => state.userId.currentUserId);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const getLoginData = JSON.parse(localStorage.getItem("loginUserData"));
     const totalCartQty = useSelector((state) => state.totalCartQty.currentTotalCartQty);
 

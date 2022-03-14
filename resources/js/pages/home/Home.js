@@ -55,15 +55,12 @@ export default function Home() {
             <section>
                 <div className='row'>
                     <h4 className='col-md-6'>On Sale</h4>
-                    <div className="dropdown col-md-6 p-bottom d-flex justify-content-end">
-                        <button className="btn main-color text-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            View All
-                        </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a className="dropdown-item" href="#">Action</a></li>
-                            <li><a className="dropdown-item" href="#">Another action</a></li>
-                            <li><a className="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                    <div className="col-md-6 p-bottom d-flex justify-content-end">
+                        <Link to={'shop'} style={{ textDecoration: 'none' }}>
+                            <button className="btn main-color text-white" type="button">
+                                View All
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 {isLoading ? (
