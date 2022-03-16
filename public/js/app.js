@@ -5419,13 +5419,6 @@ function Header() {
       state = _useState4[0],
       setState = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
-    cartTotalQty: 0
-  }),
-      _useState6 = _slicedToArray(_useState5, 2),
-      stateCartTotalQty = _useState6[0],
-      setStateCartTotalQty = _useState6[1];
-
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     getUserFullName();
   }, [user_id]);
@@ -5782,7 +5775,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 function Cart() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useDispatch)();
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
@@ -5934,7 +5926,7 @@ function Cart() {
               return axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/cart/update-cart-increment', {
                 id: $id,
                 quantity: $quantity
-              }).then(getCartTotalQuantity());
+              });
 
             case 3:
             case "end":
@@ -5963,7 +5955,7 @@ function Cart() {
               return axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost:8000/api/cart/update-cart-decrement', {
                 id: $id,
                 quantity: $quantity
-              }).then(getCartTotalQuantity());
+              });
 
             case 3:
             case "end":
@@ -5988,9 +5980,12 @@ function Cart() {
               _context6.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost:8000/api/cart/remove', {
                 id: $id
-              }).then(getCartTotalQuantity(), getCartData());
+              });
 
             case 2:
+              getCartTotal(), getCartTotalQuantity(), getCartData();
+
+            case 3:
             case "end":
               return _context6.stop();
           }

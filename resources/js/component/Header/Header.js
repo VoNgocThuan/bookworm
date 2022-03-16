@@ -18,10 +18,6 @@ function Header() {
         userFullName: ''
     });
 
-    const [stateCartTotalQty, setStateCartTotalQty] = useState({
-        cartTotalQty: 0,
-    });
-
     useEffect(() => {
         getUserFullName();
     }, [user_id])

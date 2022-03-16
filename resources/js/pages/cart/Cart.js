@@ -2,7 +2,6 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import "./cart.css"
 import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux';
 import { setTotalCartQty } from '../../actions/index'
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -63,9 +62,7 @@ export default function Cart() {
     await Axios.put('http://localhost:8000/api/cart/update-cart-increment', {
       id: $id,
       quantity: $quantity
-    }).then(
-      getCartTotalQuantity()
-    )
+    })
   }
 
   async function updateCartQtyDe($id, $quantity) {
@@ -73,18 +70,16 @@ export default function Cart() {
     await Axios.put('http://localhost:8000/api/cart/update-cart-decrement', {
       id: $id,
       quantity: $quantity
-    }).then(
-      getCartTotalQuantity()
-    )
+    })
   }
 
   async function removeCartItem($id) {
     await Axios.post('http://localhost:8000/api/cart/remove', {
       id: $id
-    }).then(
-      getCartTotalQuantity(),
-      getCartData()
-    )
+    })
+    getCartTotal(),
+    getCartTotalQuantity(),
+    getCartData()
   }
 
   async function placeOrder() {
